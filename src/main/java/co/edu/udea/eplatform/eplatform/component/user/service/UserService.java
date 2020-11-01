@@ -8,4 +8,6 @@ import javax.validation.constraints.NotNull;
 public interface UserService {
 
     User create(@NotNull UserSaveCmd userToCreateCmd);
+
+    User findById(@NotNull Long id);
 }

@@ -1,5 +1,6 @@
 package co.edu.udea.eplatform.eplatform.component.user.io.gateway;
 
+import co.edu.udea.eplatform.eplatform.component.shared.web.exception.ResourceNotFoundException;
 import co.edu.udea.eplatform.eplatform.component.user.io.repository.UserRepository;
 import co.edu.udea.eplatform.eplatform.component.user.model.User;
 import co.edu.udea.eplatform.eplatform.component.user.service.UserGateway;
@@ -17,6 +18,8 @@ public class UserGatewayImpl implements UserGateway {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private static final String RESOURCE_NOT_FOUND = "User not found";
+
     private final UserRepository userRepository;
 
     @Override
@@ -25,7 +28,7 @@ public class UserGatewayImpl implements UserGateway {
 
         final User userToBeCreated =
                 userToCreate.toBuilder().createDate(LocalDateTime.now())
-                        .updateTime(LocalDateTime.now())
+                        .updateDate(LocalDateTime.now())
                         .state(true)
                         .build();
 
@@ -34,5 +37,16 @@ public class UserGatewayImpl implements UserGateway {
 
         logger.debug("End save: userCreated = {}", userCreated);
         return userCreated;
+    }
+
+    @Override
+    public User findById(@NotNull Long id) {
+        logger.debug("Begin findById: id = {}", id);
+
+        final User userFound = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(RESOURCE_NOT_FOUND));
+
+        logger.debug("End findById: userFound = {}", userFound);
+        return userFound;
     }
 }

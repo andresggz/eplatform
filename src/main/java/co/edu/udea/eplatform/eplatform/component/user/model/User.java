@@ -60,7 +60,7 @@ public class User implements Serializable {
 
     private LocalDateTime createDate;
 
-    private LocalDateTime updateTime;
+    private LocalDateTime updateDate;
 
 
 }
