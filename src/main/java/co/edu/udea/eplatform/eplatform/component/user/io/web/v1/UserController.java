@@ -8,6 +8,7 @@ import co.edu.udea.eplatform.eplatform.component.user.service.model.UserSaveCmd;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,5 +63,16 @@ public class UserController {
 
         logger.debug("End update: userUpdated = {}", userUpdated);
         return ResponseEntity.ok(UserSaveResponse.fromModel(userUpdated));
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> delete(@Valid @PathVariable("id") @NotNull Long id){
+        logger.debug("Begin delete: id = {}", id);
+
+        userService.deleteById(id);
+
+        logger.debug("End delete: id = {}", id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

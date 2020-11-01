@@ -11,4 +11,6 @@ public interface UserGateway {
     User findById(@NotNull Long id);
 
     User update(@NotNull User userToUpdate);
+
+    void deleteById(@NotNull Long id);
 }

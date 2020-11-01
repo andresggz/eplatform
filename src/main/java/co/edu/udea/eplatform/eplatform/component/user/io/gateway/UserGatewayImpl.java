@@ -62,4 +62,14 @@ public class UserGatewayImpl implements UserGateway {
         logger.debug("End update = userUpdated = {}", userUpdated);
         return userUpdated;
     }
+
+    @Override
+    public void deleteById(@NotNull Long id) {
+        logger.debug("Begin findById = {}", id);
+
+        findById(id);
+        userRepository.deleteById(id);
+
+        logger.debug("End deleteById");
+    }
 }

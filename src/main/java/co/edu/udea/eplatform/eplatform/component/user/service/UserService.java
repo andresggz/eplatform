@@ -12,4 +12,6 @@ public interface UserService {
     User findById(@NotNull Long id);
 
     User update(@NotNull Long id, @NotNull UserSaveCmd userToUpdateCmd);
+
+    void deleteById(@NotNull Long id);
 }
