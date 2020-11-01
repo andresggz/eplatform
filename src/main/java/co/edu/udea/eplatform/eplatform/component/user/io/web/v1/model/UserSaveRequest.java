@@ -1,28 +1,19 @@
-package co.edu.udea.eplatform.eplatform.component.user.model;
+package co.edu.udea.eplatform.eplatform.component.user.io.web.v1.model;
 
+import co.edu.udea.eplatform.eplatform.component.user.service.model.UserSaveCmd;
 import lombok.*;
 
-import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "users")
 @Data
 @Generated
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(toBuilder = true)
-public class User implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+@Builder
+public class UserSaveRequest {
     @NotNull
     @NotBlank
     @Size(min = 3, max = 45)
@@ -36,31 +27,28 @@ public class User implements Serializable {
     @NotNull
     @NotBlank
     @Size(min = 3, max = 20)
-    @Column(unique = true)
     private String username;
 
     @NotNull
     @NotBlank
     @Size(min = 3, max = 100)
     @Email
-    @Column(unique = true)
     private String primaryEmailAddress;
 
     @NotNull
     @NotBlank
     @Size(min = 8, max = 45)
+    @ToString.Exclude
     private String password;
-
-    @NotNull
-    private Boolean state;
 
     @NotBlank
     @Size(min = 5, max = 20)
     private String primaryPhoneNumber;
 
-    private LocalDateTime createDate;
-
-    private LocalDateTime updateTime;
-
-
+    public static UserSaveCmd toModel(@NotNull UserSaveRequest userToCreate){
+        return UserSaveCmd.builder().names(userToCreate.getNames()).lastNames(userToCreate.getLastNames())
+                .username(userToCreate.getUsername()).primaryEmailAddress(userToCreate.getPrimaryEmailAddress())
+                .password(userToCreate.getPassword()).primaryPhoneNumber(userToCreate.getPrimaryPhoneNumber())
+                .build();
+    }
 }
