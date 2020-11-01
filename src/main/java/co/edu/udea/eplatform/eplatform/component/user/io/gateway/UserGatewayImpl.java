@@ -49,4 +49,17 @@ public class UserGatewayImpl implements UserGateway {
         logger.debug("End findById: userFound = {}", userFound);
         return userFound;
     }
+
+    @Override
+    public User update(@NotNull User userToUpdate) {
+        logger.debug("Begin update: userToUpdate = {}", userToUpdate);
+
+        final User userToBeUpdated =
+                userToUpdate.toBuilder().updateDate(LocalDateTime.now()).build();
+
+        final User userUpdated = userRepository.save(userToBeUpdated);
+
+        logger.debug("End update = userUpdated = {}", userUpdated);
+        return userUpdated;
+    }
 }
