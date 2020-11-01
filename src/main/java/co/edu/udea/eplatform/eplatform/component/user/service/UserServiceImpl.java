@@ -5,6 +5,7 @@ import co.edu.udea.eplatform.eplatform.component.user.service.model.UserSaveCmd;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService{
 
         return userCreated;
     }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -67,5 +69,13 @@ public class UserServiceImpl implements UserService{
         return userUpdated;
     }
 
+    @Override
+    public void deleteById(@NotNull Long id) {
+        logger.debug("Begin deleteById = {}", id);
+
+        userGateway.deleteById(id);
+
+        logger.debug("End findById = {}", id);
+    }
 
 }
