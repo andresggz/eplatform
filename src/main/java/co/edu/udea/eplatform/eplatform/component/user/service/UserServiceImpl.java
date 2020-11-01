@@ -35,5 +35,16 @@ public class UserServiceImpl implements UserService{
         return userCreated;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public User findById(@NotNull Long id) {
+        logger.debug("Begin findById: id = {}", id);
+
+        final User userFound = userGateway.findById(id);
+
+        logger.debug("End findById: userFound = {}", userFound);
+        return userFound;
+    }
+
 
 }

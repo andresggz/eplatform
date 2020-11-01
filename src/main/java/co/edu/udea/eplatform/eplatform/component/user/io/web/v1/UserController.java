@@ -1,6 +1,7 @@
 package co.edu.udea.eplatform.eplatform.component.user.io.web.v1;
 
 import co.edu.udea.eplatform.eplatform.component.user.io.web.v1.model.UserSaveRequest;
+import co.edu.udea.eplatform.eplatform.component.user.io.web.v1.model.UserSaveResponse;
 import co.edu.udea.eplatform.eplatform.component.user.model.User;
 import co.edu.udea.eplatform.eplatform.component.user.service.UserService;
 import co.edu.udea.eplatform.eplatform.component.user.service.model.UserSaveCmd;
@@ -8,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -41,5 +39,15 @@ public class UserController {
 
         logger.debug("End create: userCreated = {}", userCreated);
         return ResponseEntity.created(location).build();
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<UserSaveResponse> findById(@Valid @PathVariable("id") Long id){
+        logger.debug("Begin findById = {}", id);
+
+        User userFound = userService.findById(id);
+
+        logger.debug("End findById = {}", userFound);
+        return ResponseEntity.ok(UserSaveResponse.fromModel(userFound));
     }
 }
