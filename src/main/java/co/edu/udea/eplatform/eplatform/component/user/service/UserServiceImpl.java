@@ -46,5 +46,26 @@ public class UserServiceImpl implements UserService{
         return userFound;
     }
 
+    @Override
+    public User update(@NotNull Long id, @NotNull UserSaveCmd userToUpdateCmd) {
+        logger.debug("Begin update: id = {}, userToUpdateCmd = {}", id, userToUpdateCmd);
+
+        final User userInDateBase = findById(id);
+
+        final User userToUpdate = userInDateBase.toBuilder().id(id)
+                .names(userToUpdateCmd.getNames())
+                .lastNames(userToUpdateCmd.getLastNames())
+                .username(userToUpdateCmd.getUsername())
+                .primaryEmailAddress(userToUpdateCmd.getPrimaryEmailAddress())
+                .password(userToUpdateCmd.getPassword())
+                .primaryPhoneNumber(userToUpdateCmd.getPrimaryPhoneNumber())
+                .build();
+
+        final User userUpdated = userGateway.update(userToUpdate);
+
+        logger.debug("End update: userUpdated = {}", userUpdated);
+        return userUpdated;
+    }
+
 
 }

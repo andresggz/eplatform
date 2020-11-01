@@ -10,4 +10,6 @@ public interface UserService {
     User create(@NotNull UserSaveCmd userToCreateCmd);
 
     User findById(@NotNull Long id);
+
+    User update(@NotNull Long id, @NotNull UserSaveCmd userToUpdateCmd);
 }

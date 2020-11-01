@@ -50,4 +50,17 @@ public class UserController {
         logger.debug("End findById = {}", userFound);
         return ResponseEntity.ok(UserSaveResponse.fromModel(userFound));
     }
+
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<UserSaveResponse> update(@Valid @RequestBody @NotNull UserSaveRequest userToUpdate,
+                                                   @Valid @PathVariable("id") @NotNull Long id){
+        logger.debug("Begin update: id = {}, userToUpdate = {}", id, userToUpdate);
+
+        UserSaveCmd userToUpdateCmd = UserSaveRequest.toModel(userToUpdate);
+
+        User userUpdated = userService.update(id, userToUpdateCmd);
+
+        logger.debug("End update: userUpdated = {}", userUpdated);
+        return ResponseEntity.ok(UserSaveResponse.fromModel(userUpdated));
+    }
 }

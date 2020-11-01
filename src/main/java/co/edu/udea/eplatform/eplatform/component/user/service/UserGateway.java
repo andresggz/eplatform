@@ -9,4 +9,6 @@ public interface UserGateway {
     User save(@NotNull User userToCreate);
 
     User findById(@NotNull Long id);
+
+    User update(@NotNull User userToUpdate);
 }
