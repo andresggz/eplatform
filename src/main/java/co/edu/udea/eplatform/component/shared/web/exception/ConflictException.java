@@ -1,14 +1,14 @@
 package co.edu.udea.eplatform.component.shared.web.exception;
 
-public class NotAuthorizedException extends RuntimeException {
+public class ConflictException extends RuntimeException {
 
     private static final long serialVersionUID = -5644568184780083105L;
 
-    public NotAuthorizedException(String message) {
+    public ConflictException(String message) {
         super(message);
     }
 
-    public NotAuthorizedException(String message, Throwable cause) {
+    public ConflictException(String message, Throwable cause) {
         super(message, cause);
     }
 }

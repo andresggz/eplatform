@@ -3,7 +3,7 @@ package co.edu.udea.eplatform.component.user.io.gateway;
 import co.edu.udea.eplatform.component.user.io.repository.UserRepository;
 import co.edu.udea.eplatform.component.user.model.User;
 import co.edu.udea.eplatform.component.user.service.UserGateway;
-import co.edu.udea.eplatform.component.shared.web.exception.ResourceNotFoundException;
+import co.edu.udea.eplatform.component.shared.web.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +44,7 @@ public class UserGatewayImpl implements UserGateway {
         logger.debug("Begin findById: id = {}", id);
 
         final User userFound = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(RESOURCE_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(RESOURCE_NOT_FOUND));
 
         logger.debug("End findById: userFound = {}", userFound);
         return userFound;
