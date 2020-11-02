@@ -1,4 +1,4 @@
-package co.edu.udea.eplatform.eplatform;
+package co.edu.udea.eplatform;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
