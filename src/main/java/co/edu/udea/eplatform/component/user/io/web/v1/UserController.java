@@ -1,5 +1,9 @@
 package co.edu.udea.eplatform.component.user.io.web.v1;
 
+import co.edu.udea.eplatform.component.shared.model.ResponsePagination;
+import co.edu.udea.eplatform.component.user.io.web.v1.model.UserListResponse;
+import co.edu.udea.eplatform.component.user.io.web.v1.model.UserQuerySearchRequest;
+import co.edu.udea.eplatform.component.user.service.model.UserQuerySearchCmd;
 import co.edu.udea.eplatform.component.user.service.model.UserSaveCmd;
 import co.edu.udea.eplatform.component.user.io.web.v1.model.UserSaveRequest;
 import co.edu.udea.eplatform.component.user.io.web.v1.model.UserSaveResponse;
@@ -8,6 +12,10 @@ import co.edu.udea.eplatform.component.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 
@@ -29,6 +39,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> create(@Valid @NotNull @RequestBody UserSaveRequest userToCreate){
         logger.debug("Begin create: userToCreate = {}", userToCreate);
 
@@ -76,5 +87,25 @@ public class UserController {
         logger.debug("End delete: id = {}", id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+   @GetMapping
+    public ResponsePagination<UserListResponse> findByParameters(@Valid @NotNull UserQuerySearchRequest queryCriteria,
+                                                     @PageableDefault(page = 0, size = 10,
+                                 direction = Sort.Direction.DESC, sort = "id") Pageable pageable){
+        logger.debug("Begin findByParameters: queryCriteria = {}, pageable = {}", queryCriteria, pageable);
+
+       UserQuerySearchCmd queryCriteriaCmd = UserQuerySearchRequest.toModel(queryCriteria);
+
+       Page<User> usersFound = userService.findByParameters(queryCriteriaCmd, pageable);
+
+       List<UserListResponse> usersFoundList = usersFound.stream()
+               .map(UserListResponse::fromModel)
+               .collect(Collectors.toList());
+
+       logger.debug("End findByParameter: usersFound = {}", usersFound);
+
+       return ResponsePagination.fromObject(usersFoundList, usersFound.getTotalElements(), usersFound.getNumber(),
+               usersFoundList.size());
     }
 }
