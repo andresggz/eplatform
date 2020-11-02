@@ -1,10 +1,13 @@
 package co.edu.udea.eplatform.component.user.service;
 
 import co.edu.udea.eplatform.component.user.model.User;
+import co.edu.udea.eplatform.component.user.service.model.UserQuerySearchCmd;
 import co.edu.udea.eplatform.component.user.service.model.UserSaveCmd;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,6 +78,17 @@ public class UserServiceImpl implements UserService{
         userGateway.deleteById(id);
 
         logger.debug("End findById = {}", id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<User> findByParameters(@NotNull UserQuerySearchCmd queryCriteriaCmd, @NotNull Pageable pageable) {
+        logger.debug("Begin findByParameters: queryCriteriaCmd = {}, pageable = {}", queryCriteriaCmd, pageable);
+
+        Page<User> usersFound = userGateway.findByParameters(queryCriteriaCmd, pageable);
+
+        logger.debug("End findByParameters: usersFound = {}", usersFound);
+        return usersFound;
     }
 
 }

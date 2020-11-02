@@ -35,7 +35,7 @@ public class User implements Serializable {
 
     @NotNull
     @NotBlank
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 35)
     @Column(unique = true)
     private String username;
 
@@ -52,10 +52,9 @@ public class User implements Serializable {
     private String password;
 
     @NotNull
-    private Boolean state;
+    private Boolean active;
 
-    @NotBlank
-    @Size(min = 5, max = 20)
+    @Size(min = 5, max = 25)
     private String primaryPhoneNumber;
 
     private LocalDateTime createDate;

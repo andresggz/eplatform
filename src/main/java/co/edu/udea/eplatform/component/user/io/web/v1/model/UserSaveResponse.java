@@ -22,7 +22,7 @@ public class UserSaveResponse {
 
     private String primaryEmailAddress;
 
-    private Boolean state;
+    private Boolean active;
 
     private String primaryPhoneNumber;
 
@@ -34,7 +34,7 @@ public class UserSaveResponse {
         return UserSaveResponse.builder().id(user.getId()).names(user.getNames())
                 .lastNames(user.getLastNames()).username(user.getUsername())
                 .primaryEmailAddress(user.getPrimaryEmailAddress())
-                .state(user.getState()).primaryPhoneNumber(user.getPrimaryPhoneNumber())
+                .active(user.getActive()).primaryPhoneNumber(user.getPrimaryPhoneNumber())
                 .createDate(user.getCreateDate()).updateDate(user.getUpdateDate())
                 .build();
     }

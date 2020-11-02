@@ -26,7 +26,7 @@ public class UserSaveRequest {
 
     @NotNull
     @NotBlank
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 35)
     private String username;
 
     @NotNull
@@ -41,8 +41,7 @@ public class UserSaveRequest {
     @ToString.Exclude
     private String password;
 
-    @NotBlank
-    @Size(min = 5, max = 20)
+    @Size(min = 5, max = 25)
     private String primaryPhoneNumber;
 
     public static UserSaveCmd toModel(@NotNull UserSaveRequest userToCreate){

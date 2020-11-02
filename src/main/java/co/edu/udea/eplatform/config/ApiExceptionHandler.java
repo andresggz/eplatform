@@ -19,6 +19,7 @@ public class ApiExceptionHandler {
     })
     @ResponseBody
     public ErrorMessage notFoundRequest(HttpServletRequest request, Exception exception) {
+        System.out.println("---------->");
         return new ErrorMessage(exception, request.getRequestURI());
     }
 
