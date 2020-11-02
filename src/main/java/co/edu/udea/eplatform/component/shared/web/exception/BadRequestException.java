@@ -1,18 +1,11 @@
 package co.edu.udea.eplatform.component.shared.web.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
 public class BadRequestException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+    private static final String Description = "Conflict Exception (409)";
 
-    public BadRequestException(final String message) {
-        super(message);
-    }
-
-    public BadRequestException(final String message, final Throwable cause) {
-        super(message, cause);
+    public BadRequestException(String detail){
+        super(Description + ". " + detail);
     }
 }

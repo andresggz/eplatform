@@ -1,10 +1,10 @@
 package co.edu.udea.eplatform.component.shared.web.exception;
 
-public class ResourceNotFoundException extends RuntimeException{
+public class NotFoundException extends RuntimeException{
 
     private static final String DESCRIPTION = "Not Found Exception (404). ";
 
-    public ResourceNotFoundException(String detail){
+    public NotFoundException(String detail){
         super(DESCRIPTION + detail);
     }
 }
