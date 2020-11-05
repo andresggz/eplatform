@@ -1,24 +1,23 @@
-package co.edu.udea.eplatform.component.user.model;
+package co.edu.udea.eplatform.component.course.model;
 
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users")
+@Table(name = "courses")
 @Data
 @Generated
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class User implements Serializable {
+public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,40 +26,27 @@ public class User implements Serializable {
     @NotNull
     @NotBlank
     @Size(min = 3, max = 45)
-    private String names;
-
-    @NotNull
-    @NotBlank
-    @Size(min = 3, max = 45)
-    private String lastNames;
-
-    @NotNull
-    @NotBlank
-    @Size(min = 3, max = 35)
     @Column(unique = true)
-    private String username;
+    private String name;
 
+    @Lob
     @NotNull
     @NotBlank
-    @Size(min = 3, max = 100)
-    @Email
-    @Column(unique = true)
-    private String primaryEmailAddress;
+    @Size(min = 3, max = 700)
+    private String description;
 
     @NotNull
-    @NotBlank
-    @Size(min = 8, max = 45)
-    private String password;
+    private Level level;
 
-    @NotNull
+    private String iconId;
+
     private Boolean active;
 
-    @Size(min = 5, max = 25)
-    private String primaryPhoneNumber;
+    @Future
+    private LocalDateTime releaseDate;
 
     private LocalDateTime createDate;
 
     private LocalDateTime updateDate;
-
 
 }
