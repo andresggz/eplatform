@@ -1,9 +1,8 @@
 package co.edu.udea.eplatform.component.course.service.model;
 
 import co.edu.udea.eplatform.component.course.model.Course;
-import co.edu.udea.eplatform.component.course.model.Level;
+import co.edu.udea.eplatform.component.course.model.CourseLevel;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
@@ -29,7 +28,7 @@ public class CourseSaveCmd {
     private String description;
 
     @NotNull
-    private Level level;
+    private CourseLevel level;
 
     @Future
     private LocalDateTime releaseDate;

@@ -1,7 +1,7 @@
 package co.edu.udea.eplatform.component.course.io.web.v1;
 
 import co.edu.udea.eplatform.component.course.io.web.v1.model.CourseSaveRequest;
-import co.edu.udea.eplatform.component.course.model.Level;
+import co.edu.udea.eplatform.component.course.model.CourseLevel;
 import co.edu.udea.eplatform.component.course.service.CourseService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ public class CourseControllerIT {
 
         CourseSaveRequest courseToCreate = CourseSaveRequest.builder()
                 .name("Angular").description("This is a description about our Angular course")
-                .level(Level.BEGINNER).releaseDate(LocalDateTime.now().plusDays(5))
+                .level(CourseLevel.BEGINNER).releaseDate(LocalDateTime.now().plusDays(5))
                 .build();
 
         var result = client.perform(post("/api/v1/courses")
@@ -92,7 +92,7 @@ public class CourseControllerIT {
     @Test
     void whenFindACourseThatExists_thenReturns200() throws Exception{
         CourseSaveRequest courseToCreate = CourseSaveRequest.builder()
-                .name("Angular").level(Level.INTERMEDIATE).description("Description about Angular course")
+                .name("Angular").level(CourseLevel.INTERMEDIATE).description("Description about Angular course")
                 .releaseDate(LocalDateTime.now().plusDays(5))
                 .build();
         client.perform(post("/api/v1/courses")
