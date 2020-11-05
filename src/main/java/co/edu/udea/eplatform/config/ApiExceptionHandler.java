@@ -33,7 +33,8 @@ public class ApiExceptionHandler {
             org.springframework.web.HttpRequestMethodNotSupportedException.class,
             org.springframework.web.bind.MethodArgumentNotValidException.class,
             org.springframework.http.converter.HttpMessageNotReadableException.class,
-            org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class
+            org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class,
+            org.springframework.validation.BindException.class
     })
     @ResponseBody
     public ErrorMessage badRequest(HttpServletRequest request, Exception exception) {

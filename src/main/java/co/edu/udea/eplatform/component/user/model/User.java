@@ -1,6 +1,7 @@
 package co.edu.udea.eplatform.component.user.model;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

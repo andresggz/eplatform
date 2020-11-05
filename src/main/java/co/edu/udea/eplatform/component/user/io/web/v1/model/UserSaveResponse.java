@@ -1,10 +1,12 @@
 package co.edu.udea.eplatform.component.user.io.web.v1.model;
 
 import co.edu.udea.eplatform.component.user.model.User;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @Generated
 @NoArgsConstructor
