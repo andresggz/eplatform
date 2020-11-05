@@ -1,11 +1,8 @@
 package co.edu.udea.eplatform.component.course.io.web.v1.model;
 
-import co.edu.udea.eplatform.component.course.model.Level;
+import co.edu.udea.eplatform.component.course.model.CourseLevel;
 import co.edu.udea.eplatform.component.course.service.model.CourseSaveCmd;
-import co.edu.udea.eplatform.component.user.service.model.UserSaveCmd;
 import lombok.*;
-import org.aspectj.lang.annotation.After;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
@@ -31,7 +28,7 @@ public class CourseSaveRequest {
     private String description;
 
     @NotNull
-    private Level level;
+    private CourseLevel level;
 
     @Future
     private LocalDateTime releaseDate;

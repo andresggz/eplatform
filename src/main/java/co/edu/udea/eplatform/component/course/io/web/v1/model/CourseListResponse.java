@@ -3,18 +3,17 @@ package co.edu.udea.eplatform.component.course.io.web.v1.model;
 import co.edu.udea.eplatform.component.course.model.Course;
 import co.edu.udea.eplatform.component.course.model.CourseLevel;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
-@JsonInclude(Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @Generated
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CourseSaveResponse {
+public class CourseListResponse {
 
     private Long id;
 
@@ -34,12 +33,13 @@ public class CourseSaveResponse {
 
     private LocalDateTime updateDate;
 
-    public static CourseSaveResponse fromModel(Course course){
-        return CourseSaveResponse.builder().id(course.getId())
+    public static CourseListResponse fromModel(Course course){
+        return CourseListResponse.builder().id(course.getId())
                 .name(course.getName()).description(course.getDescription())
                 .level(course.getLevel()).iconId(course.getIconId())
-                .active(course.getActive()).releaseDate(course.getReleaseDate())
-                .createDate(course.getCreateDate()).updateDate(course.getUpdateDate())
+                .releaseDate(course.getReleaseDate())
+                .createDate(course.getCreateDate())
+                .updateDate(course.getUpdateDate())
                 .build();
     }
 }

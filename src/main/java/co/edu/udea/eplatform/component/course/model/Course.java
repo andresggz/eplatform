@@ -1,7 +1,6 @@
 package co.edu.udea.eplatform.component.course.model;
 
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Future;
@@ -36,9 +35,9 @@ public class Course {
     private String description;
 
     @NotNull
-    private Level level;
+    private CourseLevel level;
 
-    private String imageId;
+    private String iconId;
 
     private Boolean active;
 

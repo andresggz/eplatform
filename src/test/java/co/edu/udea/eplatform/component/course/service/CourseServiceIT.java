@@ -1,6 +1,6 @@
 package co.edu.udea.eplatform.component.course.service;
 
-import co.edu.udea.eplatform.component.course.model.Level;
+import co.edu.udea.eplatform.component.course.model.CourseLevel;
 import co.edu.udea.eplatform.component.course.service.model.CourseSaveCmd;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +28,7 @@ public class CourseServiceIT {
     void whenCreateACourseLackingReleaseDate_thenActiveIsFalse() throws Exception{
         CourseSaveCmd courseToCreate = CourseSaveCmd.builder()
                 .name("Angular").description("Description about Angular course")
-                .level(Level.ADVANCED).build();
+                .level(CourseLevel.ADVANCED).build();
 
         var courseCreated = courseService.create(courseToCreate);
 
@@ -41,7 +41,7 @@ public class CourseServiceIT {
         CourseSaveCmd courseToCreate = CourseSaveCmd.builder()
                 .name("Angular").description("Description about Angular course")
                 .releaseDate(LocalDateTime.now().plusDays(5))
-                .level(Level.ADVANCED).build();
+                .level(CourseLevel.ADVANCED).build();
 
         var courseCreated = courseService.create(courseToCreate);
 
