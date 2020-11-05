@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<UserSaveResponse> findById(@Valid @PathVariable("id") Long id){
+    public ResponseEntity<UserSaveResponse> findById(@Valid @PathVariable("id") @NotNull Long id){
         logger.debug("Begin findById = {}", id);
 
         User userFound = userService.findById(id);

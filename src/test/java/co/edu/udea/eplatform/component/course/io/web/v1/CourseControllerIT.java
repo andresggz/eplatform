@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -86,5 +87,29 @@ public class CourseControllerIT {
                 .content(objectMapper.writeValueAsString(courseToCreate)));
 
         result.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenFindACourseThatExists_thenReturns200() throws Exception{
+        CourseSaveRequest courseToCreate = CourseSaveRequest.builder()
+                .name("Angular").level(Level.INTERMEDIATE).description("Description about Angular course")
+                .releaseDate(LocalDateTime.now().plusDays(5))
+                .build();
+        client.perform(post("/api/v1/courses")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(courseToCreate)));
+
+        var result = client.perform(get("/api/v1/courses/{id}", 1)
+                .contentType("application/json"));
+
+        result.andExpect(status().isOk());
+    }
+
+    @Test
+    void whenFindACourseThatNotExist_thenReturns404() throws Exception{
+        var result = client.perform(get("/api/v1/courses/{id}", 1)
+                .contentType("application/json"));
+
+        result.andExpect(status().isNotFound());
     }
 }

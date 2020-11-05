@@ -1,6 +1,7 @@
 package co.edu.udea.eplatform.component.course.io.web.v1;
 
 import co.edu.udea.eplatform.component.course.io.web.v1.model.CourseSaveRequest;
+import co.edu.udea.eplatform.component.course.io.web.v1.model.CourseSaveResponse;
 import co.edu.udea.eplatform.component.course.model.Course;
 import co.edu.udea.eplatform.component.course.service.CourseService;
 import co.edu.udea.eplatform.component.course.service.model.CourseSaveCmd;
@@ -41,5 +42,15 @@ public class CourseController {
 
         logger.debug("End create: courseCreated = {}", courseCreated);
         return ResponseEntity.created(location).build();
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<CourseSaveResponse> findById(@Valid @PathVariable("id") @NotNull Long id){
+        logger.debug("Begin findById: id = {}", id);
+
+        Course courseFound = courseService.findById(id);
+
+        logger.debug("End findById: courseFound = {}", courseFound);
+        return ResponseEntity.ok(CourseSaveResponse.fromModel(courseFound));
     }
 }

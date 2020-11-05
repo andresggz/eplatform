@@ -7,4 +7,6 @@ import javax.validation.constraints.NotNull;
 public interface CourseGateway {
 
     Course save(@NotNull Course courseToCreate);
+
+    Course findById(@NotNull Long id);
 }

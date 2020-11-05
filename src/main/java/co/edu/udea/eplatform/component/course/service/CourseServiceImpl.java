@@ -35,9 +35,21 @@ public class CourseServiceImpl implements CourseService{
         return courseCreated;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Course findById(@NotNull Long id) {
+        logger.debug("Begin findById = {}", id);
+
+        Course courseFound = courseGateway.findById(id);
+
+        logger.debug("End findById: courseFound = {}", courseFound);
+        return courseFound;
+    }
+
     private void activateOrNot(@NotNull Course courseToCreate,
                                      @NotNull CourseSaveCmd courseToCreateCmd) {
         courseToCreate.setActive(
                 nonNull(courseToCreateCmd.getReleaseDate()));
     }
+
 }

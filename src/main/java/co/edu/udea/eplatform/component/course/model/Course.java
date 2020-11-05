@@ -38,7 +38,7 @@ public class Course {
     @NotNull
     private Level level;
 
-    private String iconId;
+    private String imageId;
 
     private Boolean active;
 

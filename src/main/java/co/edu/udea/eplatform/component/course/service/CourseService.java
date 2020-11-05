@@ -8,4 +8,6 @@ import javax.validation.constraints.NotNull;
 public interface CourseService {
 
     Course create(@NotNull CourseSaveCmd courseToCreateCmd);
+
+    Course findById(@NotNull Long id);
 }
