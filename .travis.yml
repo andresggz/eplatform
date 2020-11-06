@@ -1,0 +1,12 @@
+language: java
+branches:
+  only:
+    - develop
+    - master
+notifications:
+  email:
+    recipients:
+      - andres.grisalesg@udea.edu.co
+script:
+  - gradle check
+  - gradle build
