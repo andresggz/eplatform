@@ -8,5 +8,6 @@ notifications:
     recipients:
       - andres.grisalesg@udea.edu.co
 script:
+  - gradle assemble
   - gradle check
   - gradle build
