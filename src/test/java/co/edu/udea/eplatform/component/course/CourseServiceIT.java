@@ -1,6 +1,8 @@
-package co.edu.udea.eplatform.component.course.service;
+package co.edu.udea.eplatform.component.course;
 
 import co.edu.udea.eplatform.component.course.model.CourseLevel;
+import co.edu.udea.eplatform.component.course.service.CourseGateway;
+import co.edu.udea.eplatform.component.course.service.CourseService;
 import co.edu.udea.eplatform.component.course.service.model.CourseSaveCmd;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

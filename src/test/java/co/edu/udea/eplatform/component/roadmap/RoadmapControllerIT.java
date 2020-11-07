@@ -1,7 +1,7 @@
-package co.edu.udea.eplatform.component.roadmap.io.web.v1;
+package co.edu.udea.eplatform.component.roadmap;
 
-import co.edu.udea.eplatform.component.course.service.CourseService;
 import co.edu.udea.eplatform.component.roadmap.io.web.v1.model.RoadmapSaveRequest;
+import co.edu.udea.eplatform.component.roadmap.service.RoadmapService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +26,7 @@ public class RoadmapControllerIT {
     private MockMvc client;
 
     @Autowired
-    private CourseService courseService;
+    private RoadmapService roadmapService;
 
     @Autowired
     private ObjectMapper objectMapper;

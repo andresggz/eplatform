@@ -1,4 +1,4 @@
-package co.edu.udea.eplatform.component.user.io.web.v1;
+package co.edu.udea.eplatform.component.user;
 
 import co.edu.udea.eplatform.component.user.io.web.v1.model.UserSaveRequest;
 import co.edu.udea.eplatform.component.user.service.UserService;
