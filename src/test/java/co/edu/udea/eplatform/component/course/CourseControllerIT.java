@@ -1,4 +1,4 @@
-package co.edu.udea.eplatform.component.course.io.web.v1;
+package co.edu.udea.eplatform.component.course;
 
 import co.edu.udea.eplatform.component.course.io.web.v1.model.CourseSaveRequest;
 import co.edu.udea.eplatform.component.course.model.CourseLevel;
