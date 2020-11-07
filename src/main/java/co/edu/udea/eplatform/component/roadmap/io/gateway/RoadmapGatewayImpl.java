@@ -25,7 +25,7 @@ import static java.util.Objects.nonNull;
 @RequiredArgsConstructor
 public class RoadmapGatewayImpl implements RoadmapGateway {
 
-    private static final String RESOURCE_NOT_FOUND = "Career not found";
+    private static final String RESOURCE_NOT_FOUND = "Roadmap not found";
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
