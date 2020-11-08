@@ -1,5 +1,6 @@
 package co.edu.udea.eplatform.component.user.io.web.v1;
 
+import co.edu.udea.eplatform.component.shared.model.ErrorMessage;
 import co.edu.udea.eplatform.component.shared.model.ResponsePagination;
 import co.edu.udea.eplatform.component.user.io.web.v1.model.UserListResponse;
 import co.edu.udea.eplatform.component.user.io.web.v1.model.UserQuerySearchRequest;
@@ -9,6 +10,9 @@ import co.edu.udea.eplatform.component.user.io.web.v1.model.UserSaveRequest;
 import co.edu.udea.eplatform.component.user.io.web.v1.model.UserSaveResponse;
 import co.edu.udea.eplatform.component.user.model.User;
 import co.edu.udea.eplatform.component.user.service.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +43,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
+    @ApiOperation(value = "Create an user", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "Created."),
+            @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+            @ApiResponse(code = 404, message = "Resource not found.", response = ErrorMessage.class),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+    })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> create(@Valid @NotNull @RequestBody UserSaveRequest userToCreate){
         logger.debug("Begin create: userToCreate = {}", userToCreate);
@@ -55,6 +65,12 @@ public class UserController {
     }
 
     @GetMapping(path = "/{id}")
+    @ApiOperation(value = "Find an User by id.", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Success.", response = UserSaveResponse.class),
+            @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+            @ApiResponse(code = 404, message = "Resource not found.", response = ErrorMessage.class),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+    })
     public ResponseEntity<UserSaveResponse> findById(@Valid @PathVariable("id") @NotNull Long id){
         logger.debug("Begin findById = {}", id);
 
@@ -65,6 +81,13 @@ public class UserController {
     }
 
     @PutMapping(path = "/{id}")
+    @ApiOperation(value = "Update an user.", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Success.", response = UserSaveResponse.class),
+            @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+            @ApiResponse(code = 404, message = "Resource not found.", response = ErrorMessage.class),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+
+    })
     public ResponseEntity<UserSaveResponse> update(@Valid @RequestBody @NotNull UserSaveRequest userToUpdate,
                                                    @Valid @PathVariable("id") @NotNull Long id){
         logger.debug("Begin update: id = {}, userToUpdate = {}", id, userToUpdate);
@@ -78,6 +101,13 @@ public class UserController {
     }
 
     @DeleteMapping(path = "/{id}")
+    @ApiOperation(value = "Delete an user.", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {@ApiResponse(code = 204, message = "Success."),
+            @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+            @ApiResponse(code = 404, message = "Resource not found.", response = ErrorMessage.class),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+
+    })
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> delete(@Valid @PathVariable("id") @NotNull Long id){
         logger.debug("Begin delete: id = {}", id);
@@ -90,8 +120,15 @@ public class UserController {
     }
 
    @GetMapping
+   @ApiOperation(value = "Find users by parameters.", produces = MediaType.APPLICATION_JSON_VALUE)
+   @ApiResponses(value = {
+           @ApiResponse(code = 200, message = "Success", response = UserListResponse.class),
+           @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+           @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+
+   })
     public ResponsePagination<UserListResponse> findByParameters(@Valid @NotNull UserQuerySearchRequest queryCriteria,
-                                                     @PageableDefault(page = 0, size = 10,
+                                                     @PageableDefault(page = 0, size = 15,
                                  direction = Sort.Direction.DESC, sort = "id") Pageable pageable){
         logger.debug("Begin findByParameters: queryCriteria = {}, pageable = {}", queryCriteria, pageable);
 

@@ -8,7 +8,11 @@ import co.edu.udea.eplatform.component.course.model.Course;
 import co.edu.udea.eplatform.component.course.service.CourseService;
 import co.edu.udea.eplatform.component.course.service.model.CourseQuerySearchCmd;
 import co.edu.udea.eplatform.component.course.service.model.CourseSaveCmd;
+import co.edu.udea.eplatform.component.shared.model.ErrorMessage;
 import co.edu.udea.eplatform.component.shared.model.ResponsePagination;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +43,12 @@ public class CourseController {
     private final CourseService courseService;
 
     @PostMapping
+    @ApiOperation(value = "Create a course", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "Created."),
+            @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+            @ApiResponse(code = 404, message = "Resource not found.", response = ErrorMessage.class),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+    })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> create(@Valid @NotNull @RequestBody CourseSaveRequest courseToCreate){
         logger.debug("Begin create: courseToCreate = {}", courseToCreate);
@@ -55,6 +65,12 @@ public class CourseController {
     }
 
     @GetMapping(path = "/{id}")
+    @ApiOperation(value = "Find a course by id.", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Success.", response = CourseSaveResponse.class),
+            @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+            @ApiResponse(code = 404, message = "Resource not found.", response = ErrorMessage.class),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+    })
     public ResponseEntity<CourseSaveResponse> findById(@Valid @PathVariable("id") @NotNull Long id){
         logger.debug("Begin findById: id = {}", id);
 
@@ -65,6 +81,13 @@ public class CourseController {
     }
 
     @GetMapping
+    @ApiOperation(value = "Find courses by parameters.", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = CourseListResponse.class),
+            @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+
+    })
     public ResponsePagination<CourseListResponse> findByParameters(@Valid @NotNull CourseQuerySearchRequest queryCriteria,
                                                                    @PageableDefault(page = 0, size = 15,
                                                                    direction = Sort.Direction.DESC, sort = "id") Pageable pageable){

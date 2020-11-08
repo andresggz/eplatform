@@ -8,7 +8,11 @@ import co.edu.udea.eplatform.component.roadmap.model.Roadmap;
 import co.edu.udea.eplatform.component.roadmap.service.RoadmapService;
 import co.edu.udea.eplatform.component.roadmap.service.model.RoadmapQuerySearchCmd;
 import co.edu.udea.eplatform.component.roadmap.service.model.RoadmapSaveCmd;
+import co.edu.udea.eplatform.component.shared.model.ErrorMessage;
 import co.edu.udea.eplatform.component.shared.model.ResponsePagination;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +43,12 @@ public class RoadmapController {
     private final RoadmapService roadmapService;
 
     @PostMapping
+    @ApiOperation(value = "Create a roadmap", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "Created."),
+            @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+            @ApiResponse(code = 404, message = "Resource not found.", response = ErrorMessage.class),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+    })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> create(@Valid @NotNull @RequestBody RoadmapSaveRequest roadmapToCreate){
         logger.debug("Begin create: roadmapToCreate = {}", roadmapToCreate);
@@ -55,6 +65,12 @@ public class RoadmapController {
     }
 
     @GetMapping(path = "/{id}")
+    @ApiOperation(value = "Find a roadmap by id.", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Success.", response = RoadmapSaveResponse.class),
+            @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+            @ApiResponse(code = 404, message = "Resource not found.", response = ErrorMessage.class),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+    })
     public ResponseEntity<RoadmapSaveResponse> findById(@Valid @PathVariable("id") @NotNull Long id){
         logger.debug("Begin findById: id = {}", id);
 
@@ -65,6 +81,13 @@ public class RoadmapController {
     }
 
     @GetMapping
+    @ApiOperation(value = "Find roadmaps by parameters.", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = RoadmapSaveResponse.class),
+            @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+
+    })
     public ResponsePagination<RoadmapListResponse> findByParameters(@Valid @NotNull RoadmapQuerySearchRequest queryCriteria,
                                                                     @PageableDefault(page = 0, size = 15,
                                                                    direction = Sort.Direction.DESC, sort = "id") Pageable pageable){
