@@ -2,6 +2,7 @@ package co.edu.udea.eplatform.component.career.io.gateway;
 
 import co.edu.udea.eplatform.component.career.io.repository.CareerRepository;
 import co.edu.udea.eplatform.component.career.model.Career;
+import co.edu.udea.eplatform.component.career.model.RoadmapId;
 import co.edu.udea.eplatform.component.career.service.CareerGateway;
 import co.edu.udea.eplatform.component.career.service.model.CareerQuerySearchCmd;
 import co.edu.udea.eplatform.component.shared.web.exception.NotFoundException;
@@ -67,6 +68,20 @@ public class CareerGatewayImpl implements CareerGateway {
 
         logger.debug("End findByParameters: roadmapsFound = {}", roadmapsFound);
         return roadmapsFound;
+    }
+
+    @Override
+    public Career addRoadmap(@NotNull Long careerId, @NotNull RoadmapId roadmapIdInDataBase) {
+        logger.debug("Begin addRoadmap: careerId = {}, roadmapIdInDataBase = {}", careerId, roadmapIdInDataBase);
+
+        Career careerToAddRoadmap = findById(careerId);
+
+        careerToAddRoadmap.getRoadmapIds().add(roadmapIdInDataBase);
+
+        Career careerUpdated = careerRepository.save(careerToAddRoadmap);
+
+        logger.debug("End addRoadmap: careerUpdated = {}", careerUpdated);
+        return careerUpdated;
     }
 
     private Specification<Career> buildCriteria(CareerQuerySearchCmd queryCriteria) {

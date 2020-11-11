@@ -1,8 +1,10 @@
 package co.edu.udea.eplatform.component.career.service;
 
 import co.edu.udea.eplatform.component.career.model.Career;
+import co.edu.udea.eplatform.component.career.model.RoadmapId;
 import co.edu.udea.eplatform.component.career.service.model.CareerQuerySearchCmd;
 import co.edu.udea.eplatform.component.career.service.model.CareerSaveCmd;
+import co.edu.udea.eplatform.component.career.service.model.RoadmapAddCmd;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +19,15 @@ import javax.validation.constraints.NotNull;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class CareerServiceImpl implements CareerService {
+public class CareerServiceImpl implements CareerService{
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final CareerGateway careerGateway;
+
+    private final RoadmapIdService roadmapIdService;
+
+
 
     @Override
     public Career create(@NotNull CareerSaveCmd careerToCreateCmd) {
@@ -57,6 +63,20 @@ public class CareerServiceImpl implements CareerService {
 
         logger.debug("End findByParameters: careersFound = {}", careersFound);
         return careersFound;
+    }
+
+    @Override
+    public Career addRoadmap(@NotNull Long careerId, @NotNull RoadmapAddCmd roadmapToAddCmd) {
+        logger.debug("Begin addRoadmap: careerId = {}, roadmapToAddCmd = {}", careerId, roadmapToAddCmd);
+
+        final Long roadmapIdToAdd = roadmapToAddCmd.getRoadmapId();
+
+        RoadmapId roadmapIdInDataBase = roadmapIdService.findById(roadmapIdToAdd);
+
+        Career careerUpdated = careerGateway.addRoadmap(careerId, roadmapIdInDataBase);
+
+        logger.debug("End addRoadmap: careerUpdated = {}", careerUpdated);
+        return careerUpdated;
     }
 
     private void activateOrNot(@NotNull Career careerToCreate) {
