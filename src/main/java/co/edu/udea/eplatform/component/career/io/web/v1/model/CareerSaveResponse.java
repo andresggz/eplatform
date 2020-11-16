@@ -30,6 +30,8 @@ public class CareerSaveResponse {
 
     private Set<RoadmapId> roadmaps;
 
+    private Integer totalRoadmaps;
+
     private LocalDateTime createDate;
 
     private LocalDateTime updateDate;
@@ -37,7 +39,7 @@ public class CareerSaveResponse {
     public static CareerSaveResponse fromModel(Career career){
         return CareerSaveResponse.builder().id(career.getId())
                 .name(career.getName()).description(career.getDescription())
-                .roadmaps(career.getRoadmapIds())
+                .roadmaps(career.getRoadmapIds()).totalRoadmaps(career.getRoadmapIds().size())
                 .createDate(career.getCreateDate()).updateDate(career.getUpdateDate())
                 .build();
     }

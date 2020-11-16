@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(path = "/api/v1/careers", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
