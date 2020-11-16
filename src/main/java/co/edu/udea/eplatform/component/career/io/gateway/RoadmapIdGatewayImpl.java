@@ -38,7 +38,7 @@ public class RoadmapIdGatewayImpl implements RoadmapIdGateway {
         RoadmapId roadmapIdFound = roadmapIdRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(RESOURCE_NOT_FOUND));
 
-        logger.debug("End findById: roadmapIdFound = {}",roadmapIdFound);
+        logger.debug("End findById: roadmapIdFound = {}", roadmapIdFound);
         return roadmapIdFound;
     }
 }

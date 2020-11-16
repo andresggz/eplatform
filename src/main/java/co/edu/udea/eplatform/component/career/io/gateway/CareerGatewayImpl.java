@@ -74,11 +74,11 @@ public class CareerGatewayImpl implements CareerGateway {
     public Career addRoadmap(@NotNull Long careerId, @NotNull RoadmapId roadmapIdInDataBase) {
         logger.debug("Begin addRoadmap: careerId = {}, roadmapIdInDataBase = {}", careerId, roadmapIdInDataBase);
 
-        Career careerToAddRoadmap = findById(careerId);
+        Career careerToBeUpdated = findById(careerId);
 
-        careerToAddRoadmap.getRoadmapIds().add(roadmapIdInDataBase);
+        careerToBeUpdated.getRoadmapIds().add(roadmapIdInDataBase);
 
-        Career careerUpdated = careerRepository.save(careerToAddRoadmap);
+        Career careerUpdated = careerRepository.save(careerToBeUpdated);
 
         logger.debug("End addRoadmap: careerUpdated = {}", careerUpdated);
         return careerUpdated;

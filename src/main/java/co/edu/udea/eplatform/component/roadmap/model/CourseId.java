@@ -1,5 +1,6 @@
 package co.edu.udea.eplatform.component.roadmap.model;
 
+import co.edu.udea.eplatform.component.course.model.CourseLevel;
 import lombok.*;
 
 import javax.persistence.*;
@@ -7,42 +8,26 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
-@Table(name = "roadmaps")
 @Data
 @Generated
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class Roadmap {
+public class CourseId {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
-    @NotBlank
-    @Size(min = 3, max = 45)
-    @Column(unique = true)
     private String name;
 
-    @Lob
-    @NotNull
-    @NotBlank
-    @Size(min = 3, max = 700)
     private String description;
 
-    @Lob
-    @NotNull
-    @NotBlank
-    @Size(min = 3)
-    private String detail;
+    private String level;
 
     private String iconId;
-
-    private String bannerId;
 
     private Boolean active;
 
@@ -50,7 +35,13 @@ public class Roadmap {
 
     private LocalDateTime updateDate;
 
-    @ManyToMany
-    private Set<CourseId> courseIds;
+    @PrePersist
+    public void prePersist(){
+        createDate = LocalDateTime.now();
+    }
 
+    @PreUpdate
+    public void preUpdate(){
+        updateDate = LocalDateTime.now();
+    }
 }

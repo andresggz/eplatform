@@ -1,6 +1,7 @@
 package co.edu.udea.eplatform.component.roadmap.service;
 
 import co.edu.udea.eplatform.component.roadmap.model.Roadmap;
+import co.edu.udea.eplatform.component.roadmap.service.model.CourseAddCmd;
 import co.edu.udea.eplatform.component.roadmap.service.model.RoadmapQuerySearchCmd;
 import co.edu.udea.eplatform.component.roadmap.service.model.RoadmapSaveCmd;
 import org.springframework.data.domain.Page;
@@ -15,4 +16,6 @@ public interface RoadmapService {
     Roadmap findById(@NotNull Long id);
 
     Page<Roadmap> findByParameters(@NotNull RoadmapQuerySearchCmd queryCriteria, @NotNull Pageable pageable);
+
+    Roadmap addCourse(@NotNull Long roadmapId, @NotNull CourseAddCmd courseToAddCmd);
 }
