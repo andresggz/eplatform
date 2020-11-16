@@ -20,13 +20,11 @@ public class CareerListResponse {
 
     private String description;
 
-    private String detail;
-
     private String iconId;
 
-    private String bannerId;
-
     private Boolean active;
+
+    private Integer totalRoadmaps;
 
     private LocalDateTime createDate;
 
@@ -35,6 +33,7 @@ public class CareerListResponse {
     public static CareerListResponse fromModel(Career career){
         return CareerListResponse.builder().id(career.getId())
                 .name(career.getName()).description(career.getDescription())
+                .totalRoadmaps(career.getRoadmapIds().size())
                 .createDate(career.getCreateDate())
                 .updateDate(career.getUpdateDate())
                 .build();

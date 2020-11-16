@@ -13,4 +13,6 @@ public class RoadmapCreatedEvent {
     private Long id;
 
     private String name;
+
+    private String description;
 }

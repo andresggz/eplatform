@@ -15,7 +15,14 @@ public class RoadmapIdSaveCmd {
     @NotNull
     private Long id;
 
+    @NotNull
+    private String name;
+
+    private String description;
+
     public static RoadmapId toModel(RoadmapIdSaveCmd roadmapIdToRegister){
-        return RoadmapId.builder().id(roadmapIdToRegister.getId()).build();
+        return RoadmapId.builder().id(roadmapIdToRegister.getId())
+                .name(roadmapIdToRegister.getName()).description(roadmapIdToRegister.getDescription())
+                .build();
     }
 }

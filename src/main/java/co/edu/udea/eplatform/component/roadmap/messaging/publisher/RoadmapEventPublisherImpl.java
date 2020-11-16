@@ -25,6 +25,7 @@ public class RoadmapEventPublisherImpl implements RoadmapEventPublisher {
 
         RoadmapCreatedEvent roadmapCreatedEventToPublish = RoadmapCreatedEvent
                 .builder().id(roadmapCreated.getId()).name(roadmapCreated.getName())
+                .description(roadmapCreated.getDescription())
                 .build();
 
         publisher.publishEvent(roadmapCreatedEventToPublish);
