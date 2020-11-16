@@ -1,6 +1,7 @@
 package co.edu.udea.eplatform.component.roadmap.io.gateway;
 
 import co.edu.udea.eplatform.component.roadmap.io.repository.RoadmapRepository;
+import co.edu.udea.eplatform.component.roadmap.model.CourseId;
 import co.edu.udea.eplatform.component.roadmap.model.Roadmap;
 import co.edu.udea.eplatform.component.roadmap.service.RoadmapGateway;
 import co.edu.udea.eplatform.component.roadmap.service.model.RoadmapQuerySearchCmd;
@@ -67,6 +68,20 @@ public class RoadmapGatewayImpl implements RoadmapGateway {
 
         logger.debug("End findByParameters: roadmapsFound = {}", roadmapsFound);
         return roadmapsFound;
+    }
+
+    @Override
+    public Roadmap addCourse(@NotNull Long roadmapId, @NotNull CourseId courseIdInDataBase) {
+        logger.debug("Begin addCourse: roadmapId = {}, courseIdInDataBase = {}", roadmapId, courseIdInDataBase);
+
+        Roadmap roadmapToBeUpdated = findById(roadmapId);
+
+        roadmapToBeUpdated.getCourseIds().add(courseIdInDataBase);
+
+        Roadmap roadmapUpdated = roadmapRepository.save(roadmapToBeUpdated);
+
+        logger.debug("End addCourse: roadmapUpdated = {}", roadmapUpdated);
+        return roadmapUpdated;
     }
 
     private Specification<Roadmap> buildCriteria(RoadmapQuerySearchCmd queryCriteria) {

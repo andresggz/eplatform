@@ -28,14 +28,4 @@ public class RoadmapId {
     private LocalDateTime createDate;
 
     private LocalDateTime updateDate;
-
-    @PrePersist
-    public void prePersist(){
-        createDate = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public void preUpdate(){
-        updateDate = LocalDateTime.now();
-    }
 }

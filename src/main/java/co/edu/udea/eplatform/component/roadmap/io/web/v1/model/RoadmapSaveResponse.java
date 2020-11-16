@@ -1,11 +1,13 @@
 package co.edu.udea.eplatform.component.roadmap.io.web.v1.model;
 
+import co.edu.udea.eplatform.component.roadmap.model.CourseId;
 import co.edu.udea.eplatform.component.roadmap.model.Roadmap;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @JsonInclude(Include.NON_NULL)
 @Data
@@ -29,6 +31,10 @@ public class RoadmapSaveResponse {
 
     private Boolean active;
 
+    private Set<CourseId> courseIds;
+
+    private Integer totalCourses;
+
     private LocalDateTime createDate;
 
     private LocalDateTime updateDate;
@@ -39,6 +45,8 @@ public class RoadmapSaveResponse {
                 .detail(roadmap.getDetail()).iconId(roadmap.getIconId())
                 .active(roadmap.getActive()).detail(roadmap.getDetail())
                 .createDate(roadmap.getCreateDate()).updateDate(roadmap.getUpdateDate())
+                .courseIds(roadmap.getCourseIds())
+                .totalCourses(roadmap.getCourseIds().size())
                 .build();
     }
 }

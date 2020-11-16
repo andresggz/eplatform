@@ -36,6 +36,7 @@ import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 @RestController
 @RequestMapping(path = "/api/v1/users", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());

@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "roadmaps")
@@ -48,5 +49,8 @@ public class Roadmap {
     private LocalDateTime createDate;
 
     private LocalDateTime updateDate;
+
+    @ManyToMany
+    private Set<CourseId> courseIds;
 
 }

@@ -32,8 +32,8 @@ public class CareerEventReceiver {
                         description(event.getDescription())
                 .build();
 
-        RoadmapId roadmapIdRegistered = roadmapIdService.registerRoadmapId(roadmapIdToRegisterCmd);
+        roadmapIdService.registerRoadmapId(roadmapIdToRegisterCmd);
 
-        logger.debug("End handleRoadmapCreatedEvent: roadmapIdRegistered = {}", roadmapIdRegistered);
+        logger.debug("End handleRoadmapCreatedEvent");
     }
 }

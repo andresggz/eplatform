@@ -28,6 +28,8 @@ public class RoadmapListResponse {
 
     private Boolean active;
 
+    private Integer totalCourses;
+
     private LocalDateTime createDate;
 
     private LocalDateTime updateDate;
@@ -39,6 +41,7 @@ public class RoadmapListResponse {
                 .bannerId(roadmap.getBannerId())
                 .createDate(roadmap.getCreateDate())
                 .updateDate(roadmap.getUpdateDate())
+                .totalCourses(roadmap.getCourseIds().size())
                 .build();
     }
 }

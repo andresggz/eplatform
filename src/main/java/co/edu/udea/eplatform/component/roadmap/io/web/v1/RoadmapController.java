@@ -1,11 +1,9 @@
 package co.edu.udea.eplatform.component.roadmap.io.web.v1;
 
-import co.edu.udea.eplatform.component.roadmap.io.web.v1.model.RoadmapListResponse;
-import co.edu.udea.eplatform.component.roadmap.io.web.v1.model.RoadmapQuerySearchRequest;
-import co.edu.udea.eplatform.component.roadmap.io.web.v1.model.RoadmapSaveRequest;
-import co.edu.udea.eplatform.component.roadmap.io.web.v1.model.RoadmapSaveResponse;
+import co.edu.udea.eplatform.component.roadmap.io.web.v1.model.*;
 import co.edu.udea.eplatform.component.roadmap.model.Roadmap;
 import co.edu.udea.eplatform.component.roadmap.service.RoadmapService;
+import co.edu.udea.eplatform.component.roadmap.service.model.CourseAddCmd;
 import co.edu.udea.eplatform.component.roadmap.service.model.RoadmapQuerySearchCmd;
 import co.edu.udea.eplatform.component.roadmap.service.model.RoadmapSaveCmd;
 import co.edu.udea.eplatform.component.shared.model.ErrorMessage;
@@ -36,6 +34,7 @@ import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 @RestController
 @RequestMapping(path = "/api/v1/roadmaps", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class RoadmapController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -103,5 +102,25 @@ public class RoadmapController {
         logger.debug("End findByParameters: roadmapsFound = {}", roadmapsFound);
         return ResponsePagination.fromObject(roadmapsFoundList, roadmapsFound.getTotalElements(), roadmapsFound.getNumber(),
                 roadmapsFoundList.size());
+    }
+
+    @PatchMapping(path = "/{id}/courses")
+    @ApiOperation(value = "Add course to roadmap.", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = RoadmapSaveResponse.class),
+            @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+
+    })
+    public ResponseEntity<RoadmapSaveResponse> addCourse(@Valid @PathVariable("id") @NotNull Long id,
+                                                         @Valid @RequestBody @NotNull CourseAddRequest courseToAdd){
+        logger.debug("Begin addCourse: id = {}, courseToAdd = {}", id, courseToAdd);
+
+        CourseAddCmd courseToAddCmd = CourseAddRequest.toModel(courseToAdd);
+
+        Roadmap roadmapUpdated = roadmapService.addCourse(id, courseToAddCmd);
+
+        logger.debug("End addCourse: roadmapUpdated = {}", roadmapUpdated);
+        return ResponseEntity.ok(RoadmapSaveResponse.fromModel(roadmapUpdated));
     }
 }

@@ -31,10 +31,10 @@ import java.util.stream.Collectors;
 
 import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(path = "/api/v1/careers", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CareerController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -114,7 +114,7 @@ public class CareerController {
     })
     public ResponseEntity<CareerSaveResponse> addRoadmap(@Valid @PathVariable("id") @NotNull Long id,
                                                          @Valid @RequestBody @NotNull RoadmapAddRequest roadmapToAdd){
-        logger.debug("Begin addRoadmap: roadmapToAdd = {}", roadmapToAdd);
+        logger.debug("Begin addRoadmap: id = {}, roadmapToAdd = {}", id, roadmapToAdd);
 
         RoadmapAddCmd roadmapToAddCmd = RoadmapAddRequest.toModel(roadmapToAdd);
 
