@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,7 +26,12 @@ public class CourseIdGatewayImpl implements CourseIdGateway {
     public CourseId register(@NotNull CourseId courseIdToRegister) {
         logger.debug("Begin register: courseIdToRegister = {}", courseIdToRegister);
 
-        CourseId courseIdRegistered = courseIdRepository.save(courseIdToRegister);
+        final CourseId courseIdToBeRegistered =
+                courseIdToRegister.toBuilder().createDate(LocalDateTime.now())
+                .updateDate(LocalDateTime.now())
+                .build();
+
+        CourseId courseIdRegistered = courseIdRepository.save(courseIdToBeRegistered);
 
         logger.debug("End register: courseIdRegistered = {}", courseIdRegistered);
         return courseIdRegistered;

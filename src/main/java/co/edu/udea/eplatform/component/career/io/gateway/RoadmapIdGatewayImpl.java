@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,7 +26,12 @@ public class RoadmapIdGatewayImpl implements RoadmapIdGateway {
     public RoadmapId register(@NotNull RoadmapId roadmapIdToRegister) {
         logger.debug("Begin register: roadmapIdToRegister = {}", roadmapIdToRegister);
 
-        RoadmapId roadmapIdRegistered =  roadmapIdRepository.save(roadmapIdToRegister);
+        final RoadmapId roadmapIdToBeRegistered = roadmapIdToRegister.toBuilder()
+                .createDate(LocalDateTime.now())
+                .updateDate(LocalDateTime.now())
+                .build();
+
+        RoadmapId roadmapIdRegistered =  roadmapIdRepository.save(roadmapIdToBeRegistered);
 
         logger.debug("End register: roadmapIdRegistered = {}", roadmapIdRegistered);
         return roadmapIdRegistered;
