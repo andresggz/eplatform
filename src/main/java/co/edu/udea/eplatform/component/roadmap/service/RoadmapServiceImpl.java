@@ -21,6 +21,8 @@ public class RoadmapServiceImpl implements RoadmapService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private final RoadmapEventPublisher roadmapEventPublisher;
+
     private final RoadmapGateway roadmapGateway;
 
     @Override
@@ -32,6 +34,8 @@ public class RoadmapServiceImpl implements RoadmapService {
         activateOrNot(roadmapToCreate);
 
         Roadmap roadmapCreated = roadmapGateway.save(roadmapToCreate);
+
+        roadmapEventPublisher.publishRoadmapCreated(roadmapCreated);
 
         logger.debug("End create: roadmapCreated = {}", roadmapCreated);
         return roadmapCreated;

@@ -1,6 +1,7 @@
 package co.edu.udea.eplatform.component.career.service;
 
 import co.edu.udea.eplatform.component.career.model.Career;
+import co.edu.udea.eplatform.component.career.model.RoadmapId;
 import co.edu.udea.eplatform.component.career.service.model.CareerQuerySearchCmd;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,4 +15,6 @@ public interface CareerGateway {
     Career findById(@NotNull Long id);
 
     Page<Career> findByParameters(@NotNull CareerQuerySearchCmd queryCriteria, @NotNull Pageable pageable);
+
+    Career addRoadmap(@NotNull Long careerId, @NotNull RoadmapId roadmapIdInDataBase);
 }

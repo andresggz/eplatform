@@ -1,13 +1,11 @@
 package co.edu.udea.eplatform.component.career.io.web.v1;
 
-import co.edu.udea.eplatform.component.career.io.web.v1.model.CareerListResponse;
-import co.edu.udea.eplatform.component.career.io.web.v1.model.CareerQuerySearchRequest;
-import co.edu.udea.eplatform.component.career.io.web.v1.model.CareerSaveRequest;
-import co.edu.udea.eplatform.component.career.io.web.v1.model.CareerSaveResponse;
+import co.edu.udea.eplatform.component.career.io.web.v1.model.*;
 import co.edu.udea.eplatform.component.career.model.Career;
 import co.edu.udea.eplatform.component.career.service.CareerService;
 import co.edu.udea.eplatform.component.career.service.model.CareerQuerySearchCmd;
 import co.edu.udea.eplatform.component.career.service.model.CareerSaveCmd;
+import co.edu.udea.eplatform.component.career.service.model.RoadmapAddCmd;
 import co.edu.udea.eplatform.component.shared.model.ErrorMessage;
 import co.edu.udea.eplatform.component.shared.model.ResponsePagination;
 import io.swagger.annotations.ApiOperation;
@@ -33,6 +31,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(path = "/api/v1/careers", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
@@ -103,5 +102,25 @@ public class CareerController {
         logger.debug("End findByParameters: careersFound = {}", careersFound);
         return ResponsePagination.fromObject(careersFoundList, careersFound.getTotalElements(), careersFound.getNumber(),
                 careersFoundList.size());
+    }
+
+    @PatchMapping(path = "/{id}/roadmaps")
+    @ApiOperation(value = "Add roadmap to career.", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = CareerSaveResponse.class),
+            @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+
+    })
+    public ResponseEntity<CareerSaveResponse> addRoadmap(@Valid @PathVariable("id") @NotNull Long id,
+                                                         @Valid @RequestBody @NotNull RoadmapAddRequest roadmapToAdd){
+        logger.debug("Begin addRoadmap: roadmapToAdd = {}", roadmapToAdd);
+
+        RoadmapAddCmd roadmapToAddCmd = RoadmapAddRequest.toModel(roadmapToAdd);
+
+        Career careerUpdated = careerService.addRoadmap(id, roadmapToAddCmd);
+
+        logger.debug("End addRoadmap: careerUpdated = {}", careerUpdated);
+        return ResponseEntity.ok(CareerSaveResponse.fromModel(careerUpdated));
     }
 }
