@@ -1,7 +1,7 @@
 package co.edu.udea.eplatform.component.career.service;
 
 import co.edu.udea.eplatform.component.career.model.Career;
-import co.edu.udea.eplatform.component.career.model.RoadmapId;
+import co.edu.udea.eplatform.component.career.model.RoadmapIdCareer;
 import co.edu.udea.eplatform.component.career.service.model.CareerQuerySearchCmd;
 import co.edu.udea.eplatform.component.career.service.model.CareerSaveCmd;
 import co.edu.udea.eplatform.component.career.service.model.RoadmapAddCmd;
@@ -25,7 +25,7 @@ public class CareerServiceImpl implements CareerService{
 
     private final CareerGateway careerGateway;
 
-    private final RoadmapIdService roadmapIdService;
+    private final RoadmapIdCareerService roadmapIdCareerService;
 
 
 
@@ -71,7 +71,7 @@ public class CareerServiceImpl implements CareerService{
 
         final Long roadmapIdToAdd = roadmapToAddCmd.getRoadmapId();
 
-        RoadmapId roadmapIdInDataBase = roadmapIdService.findById(roadmapIdToAdd);
+        RoadmapIdCareer roadmapIdInDataBase = roadmapIdCareerService.findById(roadmapIdToAdd);
 
         Career careerUpdated = careerGateway.addRoadmap(careerId, roadmapIdInDataBase);
 

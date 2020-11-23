@@ -75,8 +75,12 @@ public class CareerController {
 
         Career careerFound = careerService.findById(id);
 
+        CareerSaveResponse careerToResponse = CareerSaveResponse.fromModel(careerFound);
+
+        //careerToResponse.add(Link.of("/something"));
+
         logger.debug("End findById: careerFound = {}", careerFound);
-        return ResponseEntity.ok(CareerSaveResponse.fromModel(careerFound));
+        return ResponseEntity.ok(careerToResponse);
     }
 
     @GetMapping

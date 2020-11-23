@@ -1,6 +1,6 @@
 package co.edu.udea.eplatform.component.roadmap.io.web.v1.model;
 
-import co.edu.udea.eplatform.component.roadmap.model.CourseId;
+import co.edu.udea.eplatform.component.course.model.CourseId;
 import co.edu.udea.eplatform.component.roadmap.model.Roadmap;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

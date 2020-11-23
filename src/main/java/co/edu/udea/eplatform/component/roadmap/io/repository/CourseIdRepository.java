@@ -1,6 +1,6 @@
 package co.edu.udea.eplatform.component.roadmap.io.repository;
 
-import co.edu.udea.eplatform.component.roadmap.model.CourseId;
+import co.edu.udea.eplatform.component.course.model.CourseId;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

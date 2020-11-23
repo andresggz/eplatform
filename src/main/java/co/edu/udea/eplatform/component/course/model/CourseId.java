@@ -1,6 +1,5 @@
-package co.edu.udea.eplatform.component.roadmap.model;
+package co.edu.udea.eplatform.component.course.model;
 
-import co.edu.udea.eplatform.component.course.model.CourseLevel;
 import lombok.*;
 
 import javax.persistence.*;

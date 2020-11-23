@@ -1,6 +1,6 @@
 package co.edu.udea.eplatform.component.roadmap.service;
 
-import co.edu.udea.eplatform.component.roadmap.model.CourseId;
+import co.edu.udea.eplatform.component.course.model.CourseId;
 import co.edu.udea.eplatform.component.roadmap.model.Roadmap;
 import co.edu.udea.eplatform.component.roadmap.service.model.CourseAddCmd;
 import co.edu.udea.eplatform.component.roadmap.service.model.RoadmapQuerySearchCmd;

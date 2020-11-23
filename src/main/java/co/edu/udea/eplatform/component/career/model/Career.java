@@ -43,6 +43,6 @@ public class Career {
     private LocalDateTime updateDate;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<RoadmapId> roadmapIds;
+    private Set<RoadmapIdCareer> roadmapIds;
 
 }

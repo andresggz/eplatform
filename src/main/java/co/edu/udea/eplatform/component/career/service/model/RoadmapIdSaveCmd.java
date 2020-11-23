@@ -1,6 +1,6 @@
 package co.edu.udea.eplatform.component.career.service.model;
 
-import co.edu.udea.eplatform.component.career.model.RoadmapId;
+import co.edu.udea.eplatform.component.career.model.RoadmapIdCareer;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -20,9 +20,8 @@ public class RoadmapIdSaveCmd {
 
     private String description;
 
-    public static RoadmapId toModel(RoadmapIdSaveCmd roadmapIdToRegister){
-        return RoadmapId.builder().id(roadmapIdToRegister.getId())
-                .name(roadmapIdToRegister.getName()).description(roadmapIdToRegister.getDescription())
+    public static RoadmapIdCareer toModel(RoadmapIdSaveCmd roadmapIdToRegister){
+        return RoadmapIdCareer.builder().id(roadmapIdToRegister.getId())
                 .build();
     }
 }

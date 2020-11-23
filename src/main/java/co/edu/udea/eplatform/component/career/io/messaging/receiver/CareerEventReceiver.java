@@ -1,7 +1,6 @@
 package co.edu.udea.eplatform.component.career.io.messaging.receiver;
 
-import co.edu.udea.eplatform.component.career.model.RoadmapId;
-import co.edu.udea.eplatform.component.career.service.RoadmapIdService;
+import co.edu.udea.eplatform.component.career.service.RoadmapIdCareerService;
 import co.edu.udea.eplatform.component.career.service.model.RoadmapIdSaveCmd;
 import co.edu.udea.eplatform.component.roadmap.messaging.publisher.model.RoadmapCreatedEvent;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ public class CareerEventReceiver {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final RoadmapIdService roadmapIdService;
+    private final RoadmapIdCareerService roadmapIdCareerService;
 
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
@@ -32,7 +31,7 @@ public class CareerEventReceiver {
                         description(event.getDescription())
                 .build();
 
-        roadmapIdService.registerRoadmapId(roadmapIdToRegisterCmd);
+        roadmapIdCareerService.registerRoadmapId(roadmapIdToRegisterCmd);
 
         logger.debug("End handleRoadmapCreatedEvent");
     }

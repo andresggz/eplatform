@@ -1,13 +1,12 @@
 package co.edu.udea.eplatform.component.career.io.web.v1.model;
 
 import co.edu.udea.eplatform.component.career.model.Career;
-import co.edu.udea.eplatform.component.career.model.RoadmapId;
+import co.edu.udea.eplatform.component.career.model.RoadmapIdCareer;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 @JsonInclude(Include.NON_NULL)
@@ -28,7 +27,7 @@ public class CareerSaveResponse {
 
     private Boolean active;
 
-    private Set<RoadmapId> roadmaps;
+    private Set<RoadmapIdCareer> roadmaps;
 
     private Integer totalRoadmaps;
 

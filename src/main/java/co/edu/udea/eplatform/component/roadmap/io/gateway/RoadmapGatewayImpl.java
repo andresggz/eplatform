@@ -1,7 +1,7 @@
 package co.edu.udea.eplatform.component.roadmap.io.gateway;
 
 import co.edu.udea.eplatform.component.roadmap.io.repository.RoadmapRepository;
-import co.edu.udea.eplatform.component.roadmap.model.CourseId;
+import co.edu.udea.eplatform.component.course.model.CourseId;
 import co.edu.udea.eplatform.component.roadmap.model.Roadmap;
 import co.edu.udea.eplatform.component.roadmap.service.RoadmapGateway;
 import co.edu.udea.eplatform.component.roadmap.service.model.RoadmapQuerySearchCmd;

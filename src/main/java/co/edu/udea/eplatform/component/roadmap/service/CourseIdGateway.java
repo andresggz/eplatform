@@ -1,6 +1,6 @@
 package co.edu.udea.eplatform.component.roadmap.service;
 
-import co.edu.udea.eplatform.component.roadmap.model.CourseId;
+import co.edu.udea.eplatform.component.course.model.CourseId;
 
 import javax.validation.constraints.NotNull;
 

@@ -1,7 +1,7 @@
 package co.edu.udea.eplatform.component.roadmap.io.gateway;
 
 import co.edu.udea.eplatform.component.roadmap.io.repository.CourseIdRepository;
-import co.edu.udea.eplatform.component.roadmap.model.CourseId;
+import co.edu.udea.eplatform.component.course.model.CourseId;
 import co.edu.udea.eplatform.component.roadmap.service.CourseIdGateway;
 import co.edu.udea.eplatform.component.shared.web.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package co.edu.udea.eplatform.component.roadmap.service;
 
-import co.edu.udea.eplatform.component.roadmap.model.CourseId;
+import co.edu.udea.eplatform.component.course.model.CourseId;
 import co.edu.udea.eplatform.component.roadmap.service.model.CourseIdSaveCmd;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
