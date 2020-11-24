@@ -1,6 +1,5 @@
 package co.edu.udea.eplatform.component.roadmap.model;
 
-import co.edu.udea.eplatform.component.course.model.CourseId;
 import lombok.*;
 
 import javax.persistence.*;
@@ -52,6 +51,6 @@ public class Roadmap {
     private LocalDateTime updateDate;
 
     @ManyToMany
-    private Set<CourseId> courseIds;
+    private Set<CourseIdRoadmap> coursesIds;
 
 }

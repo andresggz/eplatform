@@ -1,5 +1,6 @@
 package co.edu.udea.eplatform.component.roadmap.io.web.v1;
 
+import co.edu.udea.eplatform.component.course.io.web.v1.CourseController;
 import co.edu.udea.eplatform.component.roadmap.io.web.v1.model.*;
 import co.edu.udea.eplatform.component.roadmap.model.Roadmap;
 import co.edu.udea.eplatform.component.roadmap.service.RoadmapService;
@@ -29,6 +30,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 
 @RestController
@@ -75,8 +78,21 @@ public class RoadmapController {
 
         Roadmap roadmapFound = roadmapService.findById(id);
 
+        RoadmapSaveResponse roadmapToResponse = RoadmapSaveResponse.fromModel(roadmapFound);
+
+        roadmapToResponse.
+                add(linkTo(methodOn(CourseController.class)
+                .findById(roadmapToResponse.getId()))
+                        .withSelfRel());
+
+        roadmapFound.getCoursesIds()
+                .forEach(courseId -> roadmapToResponse.add(
+                        linkTo(methodOn(CourseController.class)
+                        .findById(courseId.getId()))
+                        .withRel("courses")));
+
         logger.debug("End findById: roadmapFound = {}", roadmapFound);
-        return ResponseEntity.ok(RoadmapSaveResponse.fromModel(roadmapFound));
+        return ResponseEntity.ok(roadmapToResponse);
     }
 
     @GetMapping
@@ -97,6 +113,9 @@ public class RoadmapController {
         Page<Roadmap> roadmapsFound = roadmapService.findByParameters(queryCriteriaCmd, pageable);
 
         List<RoadmapListResponse> roadmapsFoundList = roadmapsFound.stream().map(RoadmapListResponse::fromModel)
+                .map(roadmapListResponse -> roadmapListResponse.add(linkTo(methodOn(RoadmapController.class)
+                .findById(roadmapListResponse.getId()))
+                .withSelfRel()))
                 .collect(Collectors.toList());
 
         logger.debug("End findByParameters: roadmapsFound = {}", roadmapsFound);
@@ -120,7 +139,21 @@ public class RoadmapController {
 
         Roadmap roadmapUpdated = roadmapService.addCourse(id, courseToAddCmd);
 
+        RoadmapSaveResponse roadmapToResponse = RoadmapSaveResponse.fromModel(roadmapUpdated);
+
+        roadmapToResponse
+                .add(linkTo(methodOn(RoadmapController.class)
+                        .findById(roadmapUpdated.getId()))
+                        .withSelfRel());
+
+        roadmapUpdated.getCoursesIds()
+                .forEach(courseId -> roadmapToResponse.add(
+                        linkTo(methodOn(CourseController.class)
+                                .findById(courseId.getId()))
+                        .withRel("courses")));
+
+
         logger.debug("End addCourse: roadmapUpdated = {}", roadmapUpdated);
-        return ResponseEntity.ok(RoadmapSaveResponse.fromModel(roadmapUpdated));
+        return ResponseEntity.ok(roadmapToResponse);
     }
 }

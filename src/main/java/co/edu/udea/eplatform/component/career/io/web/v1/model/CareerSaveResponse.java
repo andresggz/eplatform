@@ -5,9 +5,9 @@ import co.edu.udea.eplatform.component.career.model.RoadmapIdCareer;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @JsonInclude(Include.NON_NULL)
 @Data
@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CareerSaveResponse {
+public class CareerSaveResponse extends RepresentationModel<CareerSaveResponse> {
 
     private Long id;
 
@@ -27,8 +27,6 @@ public class CareerSaveResponse {
 
     private Boolean active;
 
-    private Set<RoadmapIdCareer> roadmaps;
-
     private Integer totalRoadmaps;
 
     private LocalDateTime createDate;
@@ -38,7 +36,7 @@ public class CareerSaveResponse {
     public static CareerSaveResponse fromModel(Career career){
         return CareerSaveResponse.builder().id(career.getId())
                 .name(career.getName()).description(career.getDescription())
-                .roadmaps(career.getRoadmapIds()).totalRoadmaps(career.getRoadmapIds().size())
+                .totalRoadmaps(career.getRoadmapIds().size())
                 .createDate(career.getCreateDate()).updateDate(career.getUpdateDate())
                 .build();
     }

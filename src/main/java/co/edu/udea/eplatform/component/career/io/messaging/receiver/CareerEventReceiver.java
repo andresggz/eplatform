@@ -28,8 +28,7 @@ public class CareerEventReceiver {
 
         RoadmapIdSaveCmd roadmapIdToRegisterCmd = RoadmapIdSaveCmd.builder()
                 .id(event.getId()).name(event.getName()).
-                        description(event.getDescription())
-                .build();
+                        description(event.getDescription()).build();
 
         roadmapIdCareerService.registerRoadmapId(roadmapIdToRegisterCmd);
 

@@ -6,6 +6,7 @@ import co.edu.udea.eplatform.component.career.service.CareerService;
 import co.edu.udea.eplatform.component.career.service.model.CareerQuerySearchCmd;
 import co.edu.udea.eplatform.component.career.service.model.CareerSaveCmd;
 import co.edu.udea.eplatform.component.career.service.model.RoadmapAddCmd;
+import co.edu.udea.eplatform.component.roadmap.io.web.v1.RoadmapController;
 import co.edu.udea.eplatform.component.shared.model.ErrorMessage;
 import co.edu.udea.eplatform.component.shared.model.ResponsePagination;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +23,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -77,7 +80,17 @@ public class CareerController {
 
         CareerSaveResponse careerToResponse = CareerSaveResponse.fromModel(careerFound);
 
-        //careerToResponse.add(Link.of("/something"));
+        careerToResponse.
+                add(linkTo(methodOn(CareerController.class)
+                .findById(careerToResponse.getId()))
+                        .withSelfRel());
+
+        careerFound.getRoadmapIds()
+                .forEach(roadmapId -> careerToResponse.add(
+                        linkTo(methodOn(RoadmapController.class)
+                                .findById(roadmapId.getId()))
+                                .withRel("roadmaps")));
+
 
         logger.debug("End findById: careerFound = {}", careerFound);
         return ResponseEntity.ok(careerToResponse);
@@ -101,6 +114,9 @@ public class CareerController {
         Page<Career> careersFound = careerService.findByParameters(queryCriteriaCmd, pageable);
 
         List<CareerListResponse> careersFoundList = careersFound.stream().map(CareerListResponse::fromModel)
+                .map(careerListResponse -> careerListResponse.add(linkTo(methodOn(CareerController.class)
+                .findById(careerListResponse.getId()))
+                .withSelfRel()))
                 .collect(Collectors.toList());
 
         logger.debug("End findByParameters: careersFound = {}", careersFound);
@@ -124,7 +140,20 @@ public class CareerController {
 
         Career careerUpdated = careerService.addRoadmap(id, roadmapToAddCmd);
 
+        CareerSaveResponse careerUpdatedToResponse = CareerSaveResponse.fromModel(careerUpdated);
+
+        careerUpdatedToResponse.
+                add(linkTo(methodOn(CareerController.class)
+                        .findById(careerUpdatedToResponse.getId()))
+                        .withSelfRel());
+
+        careerUpdated.getRoadmapIds()
+                .forEach(roadmapId -> careerUpdatedToResponse.add(
+                        linkTo(methodOn(RoadmapController.class)
+                                .findById(roadmapId.getId()))
+                                .withRel("roadmaps")));
+
         logger.debug("End addRoadmap: careerUpdated = {}", careerUpdated);
-        return ResponseEntity.ok(CareerSaveResponse.fromModel(careerUpdated));
+        return ResponseEntity.ok(careerUpdatedToResponse);
     }
 }

@@ -1,13 +1,12 @@
 package co.edu.udea.eplatform.component.roadmap.io.web.v1.model;
 
-import co.edu.udea.eplatform.component.course.model.CourseId;
 import co.edu.udea.eplatform.component.roadmap.model.Roadmap;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @JsonInclude(Include.NON_NULL)
 @Data
@@ -15,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RoadmapSaveResponse {
+public class RoadmapSaveResponse extends RepresentationModel<RoadmapSaveResponse> {
 
     private Long id;
 
@@ -31,8 +30,6 @@ public class RoadmapSaveResponse {
 
     private Boolean active;
 
-    private Set<CourseId> courseIds;
-
     private Integer totalCourses;
 
     private LocalDateTime createDate;
@@ -45,8 +42,7 @@ public class RoadmapSaveResponse {
                 .detail(roadmap.getDetail()).iconId(roadmap.getIconId())
                 .active(roadmap.getActive()).detail(roadmap.getDetail())
                 .createDate(roadmap.getCreateDate()).updateDate(roadmap.getUpdateDate())
-                .courseIds(roadmap.getCourseIds())
-                .totalCourses(roadmap.getCourseIds().size())
+                .totalCourses(roadmap.getCoursesIds().size())
                 .build();
     }
 }

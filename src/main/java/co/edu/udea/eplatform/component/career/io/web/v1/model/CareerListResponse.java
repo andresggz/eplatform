@@ -3,6 +3,7 @@ package co.edu.udea.eplatform.component.career.io.web.v1.model;
 import co.edu.udea.eplatform.component.career.model.Career;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CareerListResponse {
+public class CareerListResponse extends RepresentationModel<CareerListResponse> {
 
     private Long id;
 

@@ -1,7 +1,7 @@
 package co.edu.udea.eplatform.component.roadmap.messaging.receiver;
 
 import co.edu.udea.eplatform.component.course.io.messaging.publisher.model.CourseCreatedEvent;
-import co.edu.udea.eplatform.component.roadmap.service.CourseIdService;
+import co.edu.udea.eplatform.component.roadmap.service.CourseIdRoadmapService;
 import co.edu.udea.eplatform.component.roadmap.service.model.CourseIdSaveCmd;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ public class RoadmapEventReceiver {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final CourseIdService courseIdService;
+    private final CourseIdRoadmapService courseIdRoadmapService;
 
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
@@ -31,7 +31,7 @@ public class RoadmapEventReceiver {
                 .active(event.getActive()).iconId(event.getIconId()).level(event.getLevel())
                 .build();
 
-        courseIdService.registerCourseId(courseIdToRegisterCmd);
+        courseIdRoadmapService.registerCourseId(courseIdToRegisterCmd);
 
         logger.debug("End handleCourseCreatedEvent");
     }

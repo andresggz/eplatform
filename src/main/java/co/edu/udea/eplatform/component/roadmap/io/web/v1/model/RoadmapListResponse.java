@@ -3,6 +3,7 @@ package co.edu.udea.eplatform.component.roadmap.io.web.v1.model;
 import co.edu.udea.eplatform.component.roadmap.model.Roadmap;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RoadmapListResponse {
+public class RoadmapListResponse extends RepresentationModel<RoadmapListResponse> {
 
     private Long id;
 
@@ -41,7 +42,6 @@ public class RoadmapListResponse {
                 .bannerId(roadmap.getBannerId())
                 .createDate(roadmap.getCreateDate())
                 .updateDate(roadmap.getUpdateDate())
-                .totalCourses(roadmap.getCourseIds().size())
                 .build();
     }
 }

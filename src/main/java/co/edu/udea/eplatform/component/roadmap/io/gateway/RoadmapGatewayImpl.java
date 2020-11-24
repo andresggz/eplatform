@@ -1,7 +1,7 @@
 package co.edu.udea.eplatform.component.roadmap.io.gateway;
 
 import co.edu.udea.eplatform.component.roadmap.io.repository.RoadmapRepository;
-import co.edu.udea.eplatform.component.course.model.CourseId;
+import co.edu.udea.eplatform.component.roadmap.model.CourseIdRoadmap;
 import co.edu.udea.eplatform.component.roadmap.model.Roadmap;
 import co.edu.udea.eplatform.component.roadmap.service.RoadmapGateway;
 import co.edu.udea.eplatform.component.roadmap.service.model.RoadmapQuerySearchCmd;
@@ -71,12 +71,12 @@ public class RoadmapGatewayImpl implements RoadmapGateway {
     }
 
     @Override
-    public Roadmap addCourse(@NotNull Long roadmapId, @NotNull CourseId courseIdInDataBase) {
-        logger.debug("Begin addCourse: roadmapId = {}, courseIdInDataBase = {}", roadmapId, courseIdInDataBase);
+    public Roadmap addCourse(@NotNull Long roadmapId, @NotNull CourseIdRoadmap courseIdRoadmapInDataBase) {
+        logger.debug("Begin addCourse: roadmapId = {}, courseIdRoadmapInDataBase = {}", roadmapId, courseIdRoadmapInDataBase);
 
         Roadmap roadmapToBeUpdated = findById(roadmapId);
 
-        roadmapToBeUpdated.getCourseIds().add(courseIdInDataBase);
+        roadmapToBeUpdated.getCoursesIds().add(courseIdRoadmapInDataBase);
 
         Roadmap roadmapUpdated = roadmapRepository.save(roadmapToBeUpdated);
 
