@@ -38,8 +38,9 @@ public class RoadmapGatewayImpl implements RoadmapGateway {
 
         final Roadmap roadmapToBeCreated =
                 roadmapToCreate.toBuilder().createDate(LocalDateTime.now())
-                .updateDate(LocalDateTime.now())
-                .build();
+                        .isLinkedToRoute(false)
+                        .updateDate(LocalDateTime.now())
+                        .build();
 
         final Roadmap roadmapCreated = roadmapRepository.save(roadmapToBeCreated);
 
@@ -84,6 +85,21 @@ public class RoadmapGatewayImpl implements RoadmapGateway {
         return roadmapUpdated;
     }
 
+    @Override
+    public Roadmap update(@NotNull Roadmap roadmapToUpdate) {
+        logger.debug("Begin update: roadmapToUpdate = {}", roadmapToUpdate);
+
+        final Roadmap roadmapToBeUpdated =
+                roadmapToUpdate.toBuilder().updateDate(LocalDateTime.now())
+                .build();
+
+        final Roadmap roadmapUpdated = roadmapRepository.save(roadmapToBeUpdated);
+
+        logger.debug("End update: roadmapUpdated = {}", roadmapUpdated);
+
+        return roadmapUpdated;
+    }
+
     private Specification<Roadmap> buildCriteria(RoadmapQuerySearchCmd queryCriteria) {
         logger.debug("Begin buildCriteria: queryCriteria = {}", queryCriteria);
 
@@ -101,6 +117,12 @@ public class RoadmapGatewayImpl implements RoadmapGateway {
                 predicates
                         .add(criteriaBuilder.and(
                                 criteriaBuilder.equal(root.get("active"),  queryCriteria.getActive())));
+            }
+
+            if (nonNull(queryCriteria.getIsLinkedToRoute())){
+                predicates
+                        .add(criteriaBuilder.and(
+                                criteriaBuilder.equal(root.get("isLinkedToRoute"), queryCriteria.getIsLinkedToRoute())));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));

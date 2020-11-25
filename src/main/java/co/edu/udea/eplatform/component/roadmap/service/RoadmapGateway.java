@@ -17,4 +17,6 @@ public interface RoadmapGateway {
     Page<Roadmap> findByParameters(@NotNull RoadmapQuerySearchCmd queryCriteria, @NotNull Pageable pageable);
 
     Roadmap addCourse(@NotNull Long roadmapId, @NotNull CourseIdRoadmap courseIdRoadmapInDataBase);
+
+    Roadmap update(@NotNull Roadmap roadmapToUpdate);
 }

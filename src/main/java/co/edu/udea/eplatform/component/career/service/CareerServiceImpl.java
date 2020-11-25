@@ -27,6 +27,8 @@ public class CareerServiceImpl implements CareerService{
 
     private final RoadmapIdCareerService roadmapIdCareerService;
 
+    private final CareerEventPublisher careerEventPublisher;
+
 
 
     @Override
@@ -74,6 +76,8 @@ public class CareerServiceImpl implements CareerService{
         RoadmapIdCareer roadmapIdInDataBase = roadmapIdCareerService.findById(roadmapIdToAdd);
 
         Career careerUpdated = careerGateway.addRoadmap(careerId, roadmapIdInDataBase);
+
+        careerEventPublisher.publishRoadmapAddedToCareer(roadmapIdInDataBase);
 
         logger.debug("End addRoadmap: careerUpdated = {}", careerUpdated);
         return careerUpdated;
