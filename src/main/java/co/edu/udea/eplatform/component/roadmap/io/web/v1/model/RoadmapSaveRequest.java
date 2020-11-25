@@ -14,19 +14,19 @@ import javax.validation.constraints.Size;
 @Builder
 public class RoadmapSaveRequest {
 
-    @NotNull
-    @NotBlank
-    @Size(min = 3, max = 45)
+    @NotNull(message = "name has to be present.")
+    @NotBlank(message = "name can't be blank.")
+    @Size(min = 3, max = 45, message = "Please enter at least {min} and at most {max} characters.")
     private String name;
 
-    @NotNull
-    @NotBlank
-    @Size(min = 3, max = 700)
+    @NotNull(message = "description has to be present.")
+    @NotBlank(message = "description can't be blank.")
+    @Size(min = 3, max = 700, message = "Please enter at least {min} and at most {max} characters.")
     private String description;
 
-    @NotNull
-    @NotBlank
-    @Size(min = 3)
+    @NotNull(message = "detail has to be present.")
+    @NotBlank(message = "detail can't be blank.")
+    @Size(min = 3, message = "Please enter at least {min} characters.")
     private String detail;
 
     public static RoadmapSaveCmd toModel(@NotNull RoadmapSaveRequest roadmapToCreate){

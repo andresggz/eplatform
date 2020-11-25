@@ -17,20 +17,20 @@ import java.time.LocalDateTime;
 @Builder
 public class CourseSaveRequest {
 
-    @NotNull
-    @NotBlank
-    @Size(min = 3, max = 45)
+    @NotNull(message = "name has to be present.")
+    @NotBlank(message = "name can't be blank.")
+    @Size(min = 3, max = 45, message = "Please enter at least {min} and at most {max} characters.")
     private String name;
 
-    @NotNull
-    @NotBlank
-    @Size(min = 3, max = 700)
+    @NotNull(message = "description has to be present.")
+    @NotBlank(message = "description can't be blank.")
+    @Size(min = 3, max = 700, message = "Please enter at least {min} and at most {max} characters.")
     private String description;
 
-    @NotNull
+    @NotNull(message = "level has to be present.")
     private CourseLevel level;
 
-    @Future
+    @Future(message = "releaseDate has to be in the future.")
     private LocalDateTime releaseDate;
 
     public static CourseSaveCmd toModel(CourseSaveRequest courseToCreate) {

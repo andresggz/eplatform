@@ -14,14 +14,14 @@ import javax.validation.constraints.Size;
 @Builder
 public class CareerSaveRequest {
 
-    @NotNull
-    @NotBlank
-    @Size(min = 3, max = 45)
+    @NotNull(message = "name has to be present.")
+    @NotBlank(message = "name can't be blank.")
+    @Size(min = 3, max = 45, message = "Please enter at least {min} and at most {max} characters.")
     private String name;
 
-    @NotNull
-    @NotBlank
-    @Size(min = 3, max = 700)
+    @NotNull(message = "description has to be present.")
+    @NotBlank(message = "description can't be blank.")
+    @Size(min = 3, max = 700, message = "Please enter at least {min} and at most {max} characters.")
     private String description;
 
     public static CareerSaveCmd toModel(@NotNull CareerSaveRequest roadmapToCreate){
