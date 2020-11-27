@@ -1,8 +1,9 @@
 package co.edu.udea.eplatform.component.roadmap.service;
 
-import co.edu.udea.eplatform.component.roadmap.model.CourseId;
+import co.edu.udea.eplatform.component.roadmap.model.CourseIdRoadmap;
 import co.edu.udea.eplatform.component.roadmap.model.Roadmap;
 import co.edu.udea.eplatform.component.roadmap.service.model.CourseAddCmd;
+import co.edu.udea.eplatform.component.roadmap.service.model.RoadmapAddedToCareerCmd;
 import co.edu.udea.eplatform.component.roadmap.service.model.RoadmapQuerySearchCmd;
 import co.edu.udea.eplatform.component.roadmap.service.model.RoadmapSaveCmd;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class RoadmapServiceImpl implements RoadmapService {
 
     private final RoadmapGateway roadmapGateway;
 
-    private final CourseIdService courseIdService;
+    private final CourseIdRoadmapService courseIdService;
 
     @Override
     public Roadmap create(@NotNull RoadmapSaveCmd roadmapToCreateCmd) {
@@ -73,11 +74,30 @@ public class RoadmapServiceImpl implements RoadmapService {
 
         final Long courseIdToAdd = courseToAddCmd.getCourseId();
 
-        CourseId courseIdInDataBase = courseIdService.findById(courseIdToAdd);
+        CourseIdRoadmap courseIdRoadmapInDataBase = courseIdService.findById(courseIdToAdd);
 
-        Roadmap roadmapUpdated = roadmapGateway.addCourse(roadmapId, courseIdInDataBase);
+        Roadmap roadmapUpdated = roadmapGateway.addCourse(roadmapId, courseIdRoadmapInDataBase);
 
         logger.debug("End addCourse: roadmapUpdated = {}", roadmapUpdated);
+        return roadmapUpdated;
+    }
+
+    @Override
+    public Roadmap update(@NotNull RoadmapAddedToCareerCmd roadmapAddedToCareerCmd) {
+        logger.debug("Begin update: roadmapAddedToCareerCmd = {}", roadmapAddedToCareerCmd);
+
+        Long roadmapIdAddedToCareer = roadmapAddedToCareerCmd.getId();
+
+        Roadmap roadmapInDataBase = findById(roadmapIdAddedToCareer);
+
+        Roadmap roadmapToUpdate = roadmapInDataBase.toBuilder()
+                .isLinkedToRoute(true)
+                .build();
+
+        Roadmap roadmapUpdated = roadmapGateway.update(roadmapToUpdate);
+
+        logger.debug("End update: roadmapUpdated = {}", roadmapUpdated);
+
         return roadmapUpdated;
     }
 

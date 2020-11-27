@@ -1,6 +1,6 @@
 package co.edu.udea.eplatform.component.career.service;
 
-import co.edu.udea.eplatform.component.career.model.RoadmapId;
+import co.edu.udea.eplatform.component.career.model.RoadmapIdCareer;
 import co.edu.udea.eplatform.component.career.service.model.RoadmapIdSaveCmd;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -13,19 +13,19 @@ import javax.validation.constraints.NotNull;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class RoadmapIdServiceImpl implements RoadmapIdService {
+public class RoadmapIdCareerServiceImpl implements RoadmapIdCareerService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final RoadmapIdGateway roadmapIdGateway;
+    private final RoadmapIdCareerGateway roadmapIdCareerGateway;
 
     @Override
-    public RoadmapId registerRoadmapId(@NotNull RoadmapIdSaveCmd roadmapIdToRegisterCmd) {
+    public RoadmapIdCareer registerRoadmapId(@NotNull RoadmapIdSaveCmd roadmapIdToRegisterCmd) {
         logger.debug("Begin registerRoadmapId: roadmapIdToRegisterCmd = {}", roadmapIdToRegisterCmd);
 
-        RoadmapId roadmapIdToRegister = RoadmapIdSaveCmd.toModel(roadmapIdToRegisterCmd);
+        RoadmapIdCareer roadmapIdToRegister = RoadmapIdSaveCmd.toModel(roadmapIdToRegisterCmd);
 
-        RoadmapId roadmapIdRegistered = roadmapIdGateway.register(roadmapIdToRegister);
+        RoadmapIdCareer roadmapIdRegistered = roadmapIdCareerGateway.register(roadmapIdToRegister);
 
         logger.debug("End registerRoadmapId: roadmapIdRegistered = {}", roadmapIdRegistered);
         return roadmapIdRegistered;
@@ -33,10 +33,10 @@ public class RoadmapIdServiceImpl implements RoadmapIdService {
 
     @Override
     @Transactional(readOnly = true)
-    public RoadmapId findById(@NotNull Long id) {
+    public RoadmapIdCareer findById(@NotNull Long id) {
         logger.debug("Begin findById: id = {}", id);
 
-        RoadmapId roadmapIdFound = roadmapIdGateway.findById(id);
+        RoadmapIdCareer roadmapIdFound = roadmapIdCareerGateway.findById(id);
 
         logger.debug("End findById: roadmapIdFound = {}", roadmapIdFound);
         return roadmapIdFound;

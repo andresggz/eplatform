@@ -22,7 +22,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
@@ -75,8 +74,17 @@ public class CareerController {
 
         Career careerFound = careerService.findById(id);
 
+        CareerSaveResponse careerToResponse = CareerSaveResponse.fromModel(careerFound);
+
+        List<String> roadmapLinksToResponse = careerFound.getRoadmapIds()
+                .stream()
+                .map( roadmapIdCareer -> String.format("/api/v1/roadmaps/%s", roadmapIdCareer.getId()))
+                .collect(Collectors.toList());
+
+        careerToResponse.setRoadmaps(roadmapLinksToResponse);
+
         logger.debug("End findById: careerFound = {}", careerFound);
-        return ResponseEntity.ok(CareerSaveResponse.fromModel(careerFound));
+        return ResponseEntity.ok(careerToResponse);
     }
 
     @GetMapping
@@ -96,7 +104,8 @@ public class CareerController {
 
         Page<Career> careersFound = careerService.findByParameters(queryCriteriaCmd, pageable);
 
-        List<CareerListResponse> careersFoundList = careersFound.stream().map(CareerListResponse::fromModel)
+        List<CareerListResponse> careersFoundList = careersFound.stream()
+                .map(CareerListResponse::fromModel)
                 .collect(Collectors.toList());
 
         logger.debug("End findByParameters: careersFound = {}", careersFound);
@@ -120,7 +129,16 @@ public class CareerController {
 
         Career careerUpdated = careerService.addRoadmap(id, roadmapToAddCmd);
 
+        CareerSaveResponse careerUpdatedToResponse = CareerSaveResponse.fromModel(careerUpdated);
+
+        List<String> roadmapLinksToResponse = careerUpdated.getRoadmapIds()
+                .stream()
+                .map( roadmapIdCareer -> String.format("/api/v1/roadmaps/%s", roadmapIdCareer.getId()))
+                .collect(Collectors.toList());
+
+        careerUpdatedToResponse.setRoadmaps(roadmapLinksToResponse);
+
         logger.debug("End addRoadmap: careerUpdated = {}", careerUpdated);
-        return ResponseEntity.ok(CareerSaveResponse.fromModel(careerUpdated));
+        return ResponseEntity.ok(careerUpdatedToResponse);
     }
 }

@@ -46,11 +46,13 @@ public class Roadmap {
 
     private Boolean active;
 
+    private Boolean isLinkedToRoute;
+
     private LocalDateTime createDate;
 
     private LocalDateTime updateDate;
 
     @ManyToMany
-    private Set<CourseId> courseIds;
+    private Set<CourseIdRoadmap> coursesIds;
 
 }

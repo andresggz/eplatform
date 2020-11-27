@@ -75,8 +75,18 @@ public class RoadmapController {
 
         Roadmap roadmapFound = roadmapService.findById(id);
 
+        RoadmapSaveResponse roadmapToResponse = RoadmapSaveResponse.fromModel(roadmapFound);
+
+        List<String> courseLinksToResponse = roadmapFound.getCoursesIds()
+                .stream()
+                .map(courseIdRoadmap -> String.format("/api/v1/courses/%s", courseIdRoadmap.getId()))
+                .collect(Collectors.toList());
+
+        roadmapToResponse.setCourses(courseLinksToResponse);
+
+
         logger.debug("End findById: roadmapFound = {}", roadmapFound);
-        return ResponseEntity.ok(RoadmapSaveResponse.fromModel(roadmapFound));
+        return ResponseEntity.ok(roadmapToResponse);
     }
 
     @GetMapping
@@ -96,7 +106,8 @@ public class RoadmapController {
 
         Page<Roadmap> roadmapsFound = roadmapService.findByParameters(queryCriteriaCmd, pageable);
 
-        List<RoadmapListResponse> roadmapsFoundList = roadmapsFound.stream().map(RoadmapListResponse::fromModel)
+        List<RoadmapListResponse> roadmapsFoundList = roadmapsFound.stream()
+                .map(RoadmapListResponse::fromModel)
                 .collect(Collectors.toList());
 
         logger.debug("End findByParameters: roadmapsFound = {}", roadmapsFound);
@@ -120,7 +131,17 @@ public class RoadmapController {
 
         Roadmap roadmapUpdated = roadmapService.addCourse(id, courseToAddCmd);
 
+        RoadmapSaveResponse roadmapToResponse = RoadmapSaveResponse.fromModel(roadmapUpdated);
+
+        List<String> courseLinksToResponse = roadmapUpdated.getCoursesIds()
+                .stream()
+                .map(courseIdRoadmap -> String.format("/api/v1/courses/%s", courseIdRoadmap.getId()))
+                .collect(Collectors.toList());
+
+        roadmapToResponse.setCourses(courseLinksToResponse);
+
+
         logger.debug("End addCourse: roadmapUpdated = {}", roadmapUpdated);
-        return ResponseEntity.ok(RoadmapSaveResponse.fromModel(roadmapUpdated));
+        return ResponseEntity.ok(roadmapToResponse);
     }
 }

@@ -7,11 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RoadmapQuerySearchCmd {
+public class RoadmapAddedToCareerCmd {
 
-    private String name;
-
-    private Boolean active;
-
-    private Boolean isLinkedToRoute;
+    Long id;
 }

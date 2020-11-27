@@ -22,28 +22,22 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
+/*
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig implements WebMvcConfigurer {
 
     @Bean
     public Docket apis() {
-        return new Docket(DocumentationType.SWAGGER_2).groupName("api")
-                .globalOperationParameters(getOperationParameterHeaders()).useDefaultResponseMessages(false)
-                .directModelSubstitute(Instant.class, Long.class).select().apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.ant("/api/**")).build().securitySchemes(Collections.singletonList(apiKey()))
-                .apiInfo(metaData());
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build();
     }
 
     private ApiKey apiKey() {
         return new ApiKey("Authorization", "Authorization", "header");
-    }
-
-    private List<Parameter> getOperationParameterHeaders() {
-        return Arrays.asList(new ParameterBuilder().name(HttpHeaders.CONTENT_TYPE)
-                .defaultValue(MediaType.APPLICATION_JSON_VALUE).description("The expected media type of the resource.")
-                .modelRef(new ModelRef("string")).parameterType("header").required(true).build());
     }
 
     private ApiInfo metaData() {
@@ -57,3 +51,4 @@ public class SwaggerConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 }
+*/

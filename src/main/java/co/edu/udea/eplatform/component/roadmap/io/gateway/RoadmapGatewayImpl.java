@@ -1,7 +1,7 @@
 package co.edu.udea.eplatform.component.roadmap.io.gateway;
 
 import co.edu.udea.eplatform.component.roadmap.io.repository.RoadmapRepository;
-import co.edu.udea.eplatform.component.roadmap.model.CourseId;
+import co.edu.udea.eplatform.component.roadmap.model.CourseIdRoadmap;
 import co.edu.udea.eplatform.component.roadmap.model.Roadmap;
 import co.edu.udea.eplatform.component.roadmap.service.RoadmapGateway;
 import co.edu.udea.eplatform.component.roadmap.service.model.RoadmapQuerySearchCmd;
@@ -38,8 +38,9 @@ public class RoadmapGatewayImpl implements RoadmapGateway {
 
         final Roadmap roadmapToBeCreated =
                 roadmapToCreate.toBuilder().createDate(LocalDateTime.now())
-                .updateDate(LocalDateTime.now())
-                .build();
+                        .isLinkedToRoute(false)
+                        .updateDate(LocalDateTime.now())
+                        .build();
 
         final Roadmap roadmapCreated = roadmapRepository.save(roadmapToBeCreated);
 
@@ -71,16 +72,31 @@ public class RoadmapGatewayImpl implements RoadmapGateway {
     }
 
     @Override
-    public Roadmap addCourse(@NotNull Long roadmapId, @NotNull CourseId courseIdInDataBase) {
-        logger.debug("Begin addCourse: roadmapId = {}, courseIdInDataBase = {}", roadmapId, courseIdInDataBase);
+    public Roadmap addCourse(@NotNull Long roadmapId, @NotNull CourseIdRoadmap courseIdRoadmapInDataBase) {
+        logger.debug("Begin addCourse: roadmapId = {}, courseIdRoadmapInDataBase = {}", roadmapId, courseIdRoadmapInDataBase);
 
         Roadmap roadmapToBeUpdated = findById(roadmapId);
 
-        roadmapToBeUpdated.getCourseIds().add(courseIdInDataBase);
+        roadmapToBeUpdated.getCoursesIds().add(courseIdRoadmapInDataBase);
 
         Roadmap roadmapUpdated = roadmapRepository.save(roadmapToBeUpdated);
 
         logger.debug("End addCourse: roadmapUpdated = {}", roadmapUpdated);
+        return roadmapUpdated;
+    }
+
+    @Override
+    public Roadmap update(@NotNull Roadmap roadmapToUpdate) {
+        logger.debug("Begin update: roadmapToUpdate = {}", roadmapToUpdate);
+
+        final Roadmap roadmapToBeUpdated =
+                roadmapToUpdate.toBuilder().updateDate(LocalDateTime.now())
+                .build();
+
+        final Roadmap roadmapUpdated = roadmapRepository.save(roadmapToBeUpdated);
+
+        logger.debug("End update: roadmapUpdated = {}", roadmapUpdated);
+
         return roadmapUpdated;
     }
 
@@ -101,6 +117,12 @@ public class RoadmapGatewayImpl implements RoadmapGateway {
                 predicates
                         .add(criteriaBuilder.and(
                                 criteriaBuilder.equal(root.get("active"),  queryCriteria.getActive())));
+            }
+
+            if (nonNull(queryCriteria.getIsLinkedToRoute())){
+                predicates
+                        .add(criteriaBuilder.and(
+                                criteriaBuilder.equal(root.get("isLinkedToRoute"), queryCriteria.getIsLinkedToRoute())));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));

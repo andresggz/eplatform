@@ -41,7 +41,6 @@ public class RoadmapListResponse {
                 .bannerId(roadmap.getBannerId())
                 .createDate(roadmap.getCreateDate())
                 .updateDate(roadmap.getUpdateDate())
-                .totalCourses(roadmap.getCourseIds().size())
                 .build();
     }
 }

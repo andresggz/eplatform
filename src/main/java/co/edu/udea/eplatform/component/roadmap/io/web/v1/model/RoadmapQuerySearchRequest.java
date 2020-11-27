@@ -14,9 +14,12 @@ public class RoadmapQuerySearchRequest {
 
     private Boolean active;
 
+    private Boolean isLinkedToRoute;
+
     public static RoadmapQuerySearchCmd toModel(RoadmapQuerySearchRequest queryCriteria){
         return RoadmapQuerySearchCmd.builder().name(queryCriteria.getName())
                     .active(queryCriteria.getActive())
+                    .isLinkedToRoute(queryCriteria.getIsLinkedToRoute())
                     .build();
     }
 }

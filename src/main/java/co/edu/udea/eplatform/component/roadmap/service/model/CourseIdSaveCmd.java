@@ -1,6 +1,6 @@
 package co.edu.udea.eplatform.component.roadmap.service.model;
 
-import co.edu.udea.eplatform.component.roadmap.model.CourseId;
+import co.edu.udea.eplatform.component.roadmap.model.CourseIdRoadmap;
 import lombok.*;
 
 @Data
@@ -22,13 +22,8 @@ public class CourseIdSaveCmd {
 
     private Boolean active;
 
-    public static CourseId toModel(CourseIdSaveCmd courseToRegister){
-        return CourseId.builder().id(courseToRegister.getId())
-                .name(courseToRegister.getName())
-                .description(courseToRegister.getDescription())
-                .active(courseToRegister.getActive())
-                .iconId(courseToRegister.getIconId())
-                .level(courseToRegister.getLevel())
+    public static CourseIdRoadmap toModel(CourseIdSaveCmd courseToRegister){
+        return CourseIdRoadmap.builder().id(courseToRegister.getId())
                 .build();
     }
 }
