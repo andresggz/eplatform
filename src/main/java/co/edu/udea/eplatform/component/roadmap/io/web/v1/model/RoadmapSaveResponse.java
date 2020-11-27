@@ -4,9 +4,9 @@ import co.edu.udea.eplatform.component.roadmap.model.Roadmap;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.*;
-import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @JsonInclude(Include.NON_NULL)
 @Data
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RoadmapSaveResponse extends RepresentationModel<RoadmapSaveResponse> {
+public class RoadmapSaveResponse {
 
     private Long id;
 
@@ -31,6 +31,8 @@ public class RoadmapSaveResponse extends RepresentationModel<RoadmapSaveResponse
     private Boolean active;
 
     private Integer totalCourses;
+
+    private List<String> courses;
 
     private LocalDateTime createDate;
 

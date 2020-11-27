@@ -1,13 +1,12 @@
 package co.edu.udea.eplatform.component.career.io.web.v1.model;
 
 import co.edu.udea.eplatform.component.career.model.Career;
-import co.edu.udea.eplatform.component.career.model.RoadmapIdCareer;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.*;
-import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @JsonInclude(Include.NON_NULL)
 @Data
@@ -15,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CareerSaveResponse extends RepresentationModel<CareerSaveResponse> {
+public class CareerSaveResponse {
 
     private Long id;
 
@@ -28,6 +27,8 @@ public class CareerSaveResponse extends RepresentationModel<CareerSaveResponse> 
     private Boolean active;
 
     private Integer totalRoadmaps;
+
+    private List<String> roadmaps;
 
     private LocalDateTime createDate;
 
