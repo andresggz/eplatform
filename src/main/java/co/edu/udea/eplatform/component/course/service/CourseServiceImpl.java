@@ -22,6 +22,8 @@ public class CourseServiceImpl implements CourseService{
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private final CourseEventPublisher courseEventPublisher;
+
     private final CourseGateway courseGateway;
 
     @Override
@@ -33,6 +35,8 @@ public class CourseServiceImpl implements CourseService{
         activateOrNot(courseToCreate, courseToCreateCmd);
 
         Course courseCreated = courseGateway.save(courseToCreate);
+
+        courseEventPublisher.publishCourseCreated(courseCreated);
 
         logger.debug("End create: courseCreated = {}", courseCreated);
         return courseCreated;
