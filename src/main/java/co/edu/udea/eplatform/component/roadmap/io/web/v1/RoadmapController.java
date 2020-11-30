@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +50,7 @@ public class RoadmapController {
             @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
     })
     @ResponseStatus(HttpStatus.CREATED)
+    @CrossOrigin(exposedHeaders = {HttpHeaders.LOCATION})
     public ResponseEntity<Void> create(@Valid @NotNull @RequestBody RoadmapSaveRequest roadmapToCreate){
         logger.debug("Begin create: roadmapToCreate = {}", roadmapToCreate);
 
