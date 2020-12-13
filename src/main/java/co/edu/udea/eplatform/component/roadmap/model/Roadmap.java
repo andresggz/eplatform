@@ -46,7 +46,7 @@ public class Roadmap {
 
     private Boolean active;
 
-    private Boolean isLinkedToRoute;
+    private Boolean linkedToRoute;
 
     private LocalDateTime createDate;
 

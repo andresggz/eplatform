@@ -1,4 +1,4 @@
-package co.edu.udea.eplatform.component.career.io.messaging.publisher;
+package co.edu.udea.eplatform.component.career.io.messaging.publisher.model;
 
 import lombok.*;
 

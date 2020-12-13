@@ -107,4 +107,5 @@ public class CourseController {
         return ResponsePagination.fromObject(coursesFoundList, coursesFound.getTotalElements(), coursesFound.getNumber(),
                 coursesFoundList.size());
     }
+
 }

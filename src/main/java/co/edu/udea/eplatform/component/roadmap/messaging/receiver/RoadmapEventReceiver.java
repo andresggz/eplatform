@@ -1,6 +1,6 @@
 package co.edu.udea.eplatform.component.roadmap.messaging.receiver;
 
-import co.edu.udea.eplatform.component.career.io.messaging.publisher.RoadmapAddedToCareerEvent;
+import co.edu.udea.eplatform.component.career.io.messaging.publisher.model.RoadmapAddedToCareerEvent;
 import co.edu.udea.eplatform.component.course.io.messaging.publisher.model.CourseCreatedEvent;
 import co.edu.udea.eplatform.component.roadmap.service.CourseIdRoadmapService;
 import co.edu.udea.eplatform.component.roadmap.service.RoadmapService;
