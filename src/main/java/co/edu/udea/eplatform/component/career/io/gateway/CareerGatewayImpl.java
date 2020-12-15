@@ -84,6 +84,29 @@ public class CareerGatewayImpl implements CareerGateway {
         return careerUpdated;
     }
 
+    @Override
+    public Career update(@NotNull Career careerToUpdate) {
+        logger.debug("Begin update: careerToUpdate = {}", careerToUpdate);
+
+        final Career careerToBeUpdated =
+                careerToUpdate.toBuilder().updateDate(LocalDateTime.now()).build();
+
+        final Career careerUpdated = careerRepository.save(careerToBeUpdated);
+
+        logger.debug("End update: careerUpdated = {}", careerUpdated);
+        return careerUpdated;
+    }
+
+    @Override
+    public void deleteById(@NotNull Long id) {
+        logger.debug("Begin deleteById: id = {}", id);
+
+        findById(id);
+        careerRepository.deleteById(id);
+
+        logger.debug("End deleteById");
+    }
+
     private Specification<Career> buildCriteria(CareerQuerySearchCmd queryCriteria) {
         logger.debug("Begin buildCriteria: queryCriteria = {}", queryCriteria);
 

@@ -23,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -145,5 +146,44 @@ public class RoadmapController {
 
         logger.debug("End addCourse: roadmapUpdated = {}", roadmapUpdated);
         return ResponseEntity.ok(roadmapToResponse);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    @ApiOperation(value = "Delete a roadmap", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {@ApiResponse(code = 204, message = "Success."),
+            @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+            @ApiResponse(code = 404, message = "Resource not found.", response = ErrorMessage.class),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+    })
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> delete(@Valid @PathVariable("id") @NotNull Long id){
+        logger.debug("Begin delete: id = {}", id);
+
+        roadmapService.deleteById(id);
+
+        logger.debug("End delete: id = {}", id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/upload-sheets")
+    @ApiOperation(value = "Create roadmaps from sheets", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "Created."),
+            @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+            @ApiResponse(code = 404, message = "Resource not found.", response = ErrorMessage.class),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+    })
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public ResponseEntity<List<URI>> createFromSheets(@RequestParam("file") @NotNull MultipartFile careersToCreateFromSheets){
+        logger.debug("Begin createFromSheets: careersToCreate");
+
+        List<Roadmap> roadmapsCreated = roadmapService.createFromSheets(careersToCreateFromSheets);
+
+        List<URI> roadmapsUrisCreated = roadmapsCreated.stream()
+                .map(roadmap -> fromUriString("/api/v1/roadmaps").path("/{id}").buildAndExpand(roadmap.getId()).toUri())
+                .collect(Collectors.toList());
+
+        logger.debug("End createFromSheets");
+        return ResponseEntity.ok(roadmapsUrisCreated);
     }
 }

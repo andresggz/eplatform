@@ -38,7 +38,7 @@ public class RoadmapGatewayImpl implements RoadmapGateway {
 
         final Roadmap roadmapToBeCreated =
                 roadmapToCreate.toBuilder().createDate(LocalDateTime.now())
-                        .isLinkedToRoute(false)
+                        .linkedToRoute(false)
                         .updateDate(LocalDateTime.now())
                         .build();
 
@@ -100,6 +100,16 @@ public class RoadmapGatewayImpl implements RoadmapGateway {
         return roadmapUpdated;
     }
 
+    @Override
+    public void deleteById(@NotNull Long id) {
+        logger.debug("Begin delete: id = {}", id);
+
+        findById(id);
+        roadmapRepository.deleteById(id);
+
+        logger.debug("End delete: id = {}", id);
+    }
+
     private Specification<Roadmap> buildCriteria(RoadmapQuerySearchCmd queryCriteria) {
         logger.debug("Begin buildCriteria: queryCriteria = {}", queryCriteria);
 
@@ -122,7 +132,7 @@ public class RoadmapGatewayImpl implements RoadmapGateway {
             if (nonNull(queryCriteria.getIsLinkedToRoute())){
                 predicates
                         .add(criteriaBuilder.and(
-                                criteriaBuilder.equal(root.get("isLinkedToRoute"), queryCriteria.getIsLinkedToRoute())));
+                                criteriaBuilder.equal(root.get("linkedToRoute"), queryCriteria.getIsLinkedToRoute())));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));

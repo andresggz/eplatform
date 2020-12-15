@@ -23,6 +23,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
@@ -142,5 +144,60 @@ public class CareerController {
 
         logger.debug("End addRoadmap: careerUpdated = {}", careerUpdated);
         return ResponseEntity.ok(careerUpdatedToResponse);
+    }
+
+    @PostMapping("/upload-sheets")
+    @ApiOperation(value = "Create careers from sheets", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {@ApiResponse(code = 201, message = "Created."),
+            @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+            @ApiResponse(code = 404, message = "Resource not found.", response = ErrorMessage.class),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+    })
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public ResponseEntity<Void> createFromSheets(@RequestParam("file") @NotNull MultipartFile careersToCreateFromSheets){
+        logger.debug("Begin createFromSheets: careersToCreate");
+
+        careerService.createFromSheets(careersToCreateFromSheets);
+
+        logger.debug("End createFromSheets");
+       return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(path = "/{id}")
+    @ApiOperation(value = "Update a career", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Success.", response = CareerSaveResponse.class),
+            @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+            @ApiResponse(code = 404, message = "Resource not found.", response = ErrorMessage.class),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+    })
+    public ResponseEntity<CareerSaveResponse> update(@Valid @RequestBody @NotNull CareerSaveRequest careerToUpdate,
+                                                     @Valid @PathVariable("id") @NotNull Long id){
+        logger.debug("Begin update: careerToUpdate = {}, id = {}", careerToUpdate, id);
+
+        CareerSaveCmd careerToUpdateCmd = CareerSaveRequest.toModel(careerToUpdate);
+
+        Career careerUpdated = careerService.update(id, careerToUpdateCmd);
+
+        logger.debug("End update: careerUpdated = {}", careerUpdated);
+
+        return ResponseEntity.ok(CareerSaveResponse.fromModel(careerUpdated));
+    }
+
+    @DeleteMapping(path = "/{id}")
+    @ApiOperation(value = "Delete a career", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {@ApiResponse(code = 204, message = "Success."),
+            @ApiResponse(code = 400, message = "Payload is invalid.", response = ErrorMessage.class),
+            @ApiResponse(code = 404, message = "Resource not found.", response = ErrorMessage.class),
+            @ApiResponse(code = 500, message = "Internal server error.", response = ErrorMessage.class)
+    })
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> delete(@Valid @PathVariable("id") @NotNull Long id){
+        logger.debug("Begin delete: id = {}", id);
+
+        careerService.deleteById(id);
+
+        logger.debug("End delete: id = {}", id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
