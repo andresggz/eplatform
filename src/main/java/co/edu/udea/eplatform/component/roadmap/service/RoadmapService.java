@@ -7,8 +7,10 @@ import co.edu.udea.eplatform.component.roadmap.service.model.RoadmapQuerySearchC
 import co.edu.udea.eplatform.component.roadmap.service.model.RoadmapSaveCmd;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public interface RoadmapService {
 
@@ -21,4 +23,8 @@ public interface RoadmapService {
     Roadmap addCourse(@NotNull Long roadmapId, @NotNull CourseAddCmd courseToAddCmd);
 
     Roadmap update(@NotNull RoadmapAddedToCareerCmd roadmapAddedToCareerCmd);
+
+    void deleteById(@NotNull Long id);
+
+    List<Roadmap> createFromSheets(@NotNull MultipartFile roadmapsToCreateFromSheets);
 }

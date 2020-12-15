@@ -1,5 +1,6 @@
 package co.edu.udea.eplatform.component.career.io.messaging.publisher;
 
+import co.edu.udea.eplatform.component.career.io.messaging.publisher.model.RoadmapAddedToCareerEvent;
 import co.edu.udea.eplatform.component.career.model.RoadmapIdCareer;
 import co.edu.udea.eplatform.component.career.service.CareerEventPublisher;
 import lombok.RequiredArgsConstructor;

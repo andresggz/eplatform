@@ -19,4 +19,6 @@ public interface RoadmapGateway {
     Roadmap addCourse(@NotNull Long roadmapId, @NotNull CourseIdRoadmap courseIdRoadmapInDataBase);
 
     Roadmap update(@NotNull Roadmap roadmapToUpdate);
+
+    void deleteById(@NotNull Long id);
 }

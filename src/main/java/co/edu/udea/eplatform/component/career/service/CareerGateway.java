@@ -17,4 +17,8 @@ public interface CareerGateway {
     Page<Career> findByParameters(@NotNull CareerQuerySearchCmd queryCriteria, @NotNull Pageable pageable);
 
     Career addRoadmap(@NotNull Long careerId, @NotNull RoadmapIdCareer roadmapIdInDataBase);
+
+    Career update(@NotNull Career careerToUpdate);
+
+    void deleteById(@NotNull Long id);
 }
